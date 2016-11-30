@@ -115,6 +115,7 @@ void Timer(int extra);
 void RegisterCallbacks(void);
 void MenuSelect(GLint menu);
 void GlutMenu(void);
+void draw_axis();
 int main(int argc, char **argv);
 
 
@@ -731,6 +732,7 @@ void Display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     KeyOperations();
     
+    draw_axis();
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT,LightGlobalAmbient);
     
     //Vector3 vDir1=cameraL1.getView()-cameraL1.getPosition();
@@ -975,7 +977,30 @@ void GlutMenu(void)
 }
 
 
-// Program entering point
+void draw_axis ( )
+{
+    glLineWidth ( 2.0f );
+    glBegin(GL_LINE_LOOP);
+    glColor3f(1,0,0);
+    glVertex3f(-500,0,0);
+    glVertex3f(500,0,0);
+    glEnd();
+    
+    glBegin(GL_LINE_LOOP);
+    glColor3f(0,1,0);
+    glVertex3f(0,-500,0);
+    glVertex3f(0,500,0);
+    glEnd();
+    
+    glBegin(GL_LINE_LOOP);
+    glColor3f(0,0,1);
+    glVertex3f(0,0,-500);
+    glVertex3f(0,0,500);
+    glEnd();
+    
+}
+
+//// Program entering point
 //int main(int argc, char **argv) {
 //    InitLogic();
 //    InitGlut(argc, argv);

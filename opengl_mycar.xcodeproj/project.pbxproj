@@ -10,11 +10,14 @@
 		C70A6FE71DE5763E0011282D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C70A6FE51DE5763E0011282D /* Car.cpp */; };
 		C7806AFA1DDCB2DF0019DE30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806AF91DDCB2DF0019DE30 /* main.cpp */; };
 		C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B021DDCB35C0019DE30 /* Camera.cpp */; };
-		C7806B0F1DDCB35C0019DE30 /* gRobot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B051DDCB35C0019DE30 /* gRobot.cpp */; };
 		C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B071DDCB35C0019DE30 /* Robot.cpp */; };
 		C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B0C1DDCB35C0019DE30 /* Vector3.cpp */; };
 		C7806B151DDCB68A0019DE30 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7806B141DDCB68A0019DE30 /* OpenGL.framework */; };
 		C7806B171DDCB6900019DE30 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7806B161DDCB6900019DE30 /* GLUT.framework */; };
+		C796EBA01DE8006F00FAD14E /* objLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EB9E1DE8006F00FAD14E /* objLoader.cpp */; };
+		C796EBA31DE8013B00FAD14E /* obj_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA11DE8013B00FAD14E /* obj_parser.cpp */; };
+		C796EBA61DE8015C00FAD14E /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA41DE8015C00FAD14E /* list.cpp */; };
+		C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA71DE8017500FAD14E /* string_extra.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +53,14 @@
 		C7806B0D1DDCB35C0019DE30 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
 		C7806B141DDCB68A0019DE30 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		C7806B161DDCB6900019DE30 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		C796EB9E1DE8006F00FAD14E /* objLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objLoader.cpp; sourceTree = "<group>"; };
+		C796EB9F1DE8006F00FAD14E /* objLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = objLoader.h; sourceTree = "<group>"; };
+		C796EBA11DE8013B00FAD14E /* obj_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj_parser.cpp; sourceTree = "<group>"; };
+		C796EBA21DE8013B00FAD14E /* obj_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj_parser.h; sourceTree = "<group>"; };
+		C796EBA41DE8015C00FAD14E /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = list.cpp; sourceTree = "<group>"; };
+		C796EBA51DE8015C00FAD14E /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
+		C796EBA71DE8017500FAD14E /* string_extra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string_extra.cpp; sourceTree = "<group>"; };
+		C796EBA81DE8017500FAD14E /* string_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_extra.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +96,14 @@
 		C7806AF81DDCB2DF0019DE30 /* opengl_mycar */ = {
 			isa = PBXGroup;
 			children = (
+				C796EBA71DE8017500FAD14E /* string_extra.cpp */,
+				C796EBA81DE8017500FAD14E /* string_extra.h */,
+				C796EBA41DE8015C00FAD14E /* list.cpp */,
+				C796EBA51DE8015C00FAD14E /* list.h */,
+				C796EBA11DE8013B00FAD14E /* obj_parser.cpp */,
+				C796EBA21DE8013B00FAD14E /* obj_parser.h */,
+				C796EB9E1DE8006F00FAD14E /* objLoader.cpp */,
+				C796EB9F1DE8006F00FAD14E /* objLoader.h */,
 				C7806B001DDCB35C0019DE30 /* barrel1.jpg */,
 				C7806B011DDCB35C0019DE30 /* barrel2.jpg */,
 				C7806B021DDCB35C0019DE30 /* Camera.cpp */,
@@ -174,10 +193,13 @@
 			files = (
 				C70A6FE71DE5763E0011282D /* Car.cpp in Sources */,
 				C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */,
+				C796EBA61DE8015C00FAD14E /* list.cpp in Sources */,
 				C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */,
 				C7806AFA1DDCB2DF0019DE30 /* main.cpp in Sources */,
+				C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */,
 				C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */,
-				C7806B0F1DDCB35C0019DE30 /* gRobot.cpp in Sources */,
+				C796EBA01DE8006F00FAD14E /* objLoader.cpp in Sources */,
+				C796EBA31DE8013B00FAD14E /* obj_parser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

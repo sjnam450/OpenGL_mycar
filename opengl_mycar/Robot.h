@@ -2,7 +2,7 @@
 #ifndef ROBOT_H__
 #define ROBOT_H__
 
-//#include "TextureLoader.h"
+#include "TextureLoader.h"
 #include "Vector3.h"
 
 class Robot

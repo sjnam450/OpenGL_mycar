@@ -151,8 +151,8 @@ void Robot::setLook(void)
     Vector3 pPosCorr=m_pPosition + m_vHeadView*0.2;     // Correct view point to the head size
     
     // Set camera view
-    gluLookAt(pPosCorr.v[0], HEAD_Y_POS, pPosCorr.v[2],    
-        pPosCorr.v[0]+m_vHeadView.v[0], HEAD_Y_POS+m_vHeadView.v[1], pPosCorr.v[2]+m_vHeadView.v[2],       
+    gluLookAt(pPosCorr.v[0]-10, HEAD_Y_POS+3, pPosCorr.v[2]-3,
+        pPosCorr.v[0]+m_vHeadView.v[0], HEAD_Y_POS+m_vHeadView.v[1], pPosCorr.v[2]+m_vHeadView.v[2],
         0.0, 1.0, 0.0); 
 }
 
@@ -162,7 +162,8 @@ void Robot::move(float speed)
        
     m_pPosition.v[0] += m_vDirection.v[0] * speed;       
     m_pPosition.v[2] += m_vDirection.v[2] * speed;      
-        
+    
+    printf("robot's pos %f, %f, %f\nd", m_pPosition.v[0], m_pPosition.v[1], m_pPosition.v[2]);
 }
 
 // Move left/right
@@ -175,7 +176,8 @@ void Robot::strafe(float speed)
 
     //   update position
     m_pPosition.v[0]  +=  vOrtho.v[0] * speed;   
-    m_pPosition.v[2]  +=  vOrtho.v[2] * speed;   
+    m_pPosition.v[2]  +=  vOrtho.v[2] * speed;
+    printf("robot's pos %f, %f, %f\nd", m_pPosition.v[0], m_pPosition.v[1], m_pPosition.v[2]);
 
 }
 
@@ -197,10 +199,10 @@ void Robot::drawRobot( void )
                     glRotatef(-headAngleZ,1,0,0); 
                     glRotatef(-headAngleY,0,1,0);
                     glTranslatef(0.0,-0.5,0.0);
-                    glCallList(HEAD);   
+                    glCallList(HEAD);
                 glPopMatrix();
                 glPushMatrix();
-                    glCallList(BODY);   
+                    glCallList(BODY);
                 glPopMatrix();
                 
                 // RIGHT ARM, FOREARM and PALM
@@ -254,7 +256,7 @@ void Robot::drawRobot( void )
             glPopMatrix();
     glPopMatrix();
     glPopAttrib();
-    //m_vDirection.draw(m_pPosition);    
+    //m_vDirection.draw(m_pPosition);
 }
 
 // Robot rotation

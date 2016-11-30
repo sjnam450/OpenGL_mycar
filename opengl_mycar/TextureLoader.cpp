@@ -45,13 +45,13 @@
 TextureLoader::TextureLoader()
 {
 	// default to alpha matching BLACK
-	SetAlphaMatch(TRUE, 0, 0, 0);										// Set the Alpha Matching State
+	SetAlphaMatch(true, 0, 0, 0);										// Set the Alpha Matching State
 
 	// default to full sized textures
-	SetHighQualityTextures(TRUE);
+	SetHighQualityTextures(true);
 
 	// no mipmap textures
-	SetMipMapping(FALSE);
+	SetMipMapping(false);
 
 	// no texture filtering
 	SetTextureFilter(txNoFilter);

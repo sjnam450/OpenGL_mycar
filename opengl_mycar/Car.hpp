@@ -9,12 +9,20 @@
 #ifndef Car_hpp
 #define Car_hpp
 
-#include <stdio.h>
+
+#include "Vector3.h"
 
 class Car {
+
     
     
 public:
+    Car();
+    void move(float speed);
+    void rotate(float speed);
+    
+    Vector3 currentPosition;
+    
     
 };
 
