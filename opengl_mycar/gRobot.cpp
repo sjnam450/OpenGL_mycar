@@ -139,21 +139,21 @@ void InitGl() {
     
     glClearColor(1.0, 1.0, 1.0, 0.0); //background
     robot.initStructures();  
-    glEnable(GL_LIGHTING);
-    glShadeModel(GL_SMOOTH);
+    //glEnable(GL_LIGHTING);
+    //glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);	
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
     //glEnable(GL_CULL_FACE);
     glEnable(GL_NORMALIZE);
     //glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
-    GLfloat FogCol[3]={0.7f,0.7f,0.7f};
-    glEnable(GL_FOG);
-    glFogfv(GL_FOG_COLOR,FogCol); // Set the fog color
-    glFogi(GL_FOG_MODE,GL_EXP2);  
-    glFogf(GL_FOG_DENSITY,0.03f); // Set fog density
+    //GLfloat FogCol[3]={0.7f,0.7f,0.7f};
+    //glEnable(GL_FOG);
+    //glFogfv(GL_FOG_COLOR,FogCol); // Set the fog color
+    //glFogi(GL_FOG_MODE,GL_EXP2);
+    //glFogf(GL_FOG_DENSITY,0.03f); // Set fog density
 
-    camera3P.set(10,5, -10, 0,0,0, 0,1,0);
+    camera3P.set(10,5, 10, 0,0,0, 0,1,0);
     
 //    if (!m_TextureLoader.LoadTextureFromDisk("parquet1.tga",&m_FloorTexture)) std::cerr<<"Unable to load texture. Disabling."; //Load Texture
 //    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
@@ -730,10 +730,15 @@ void KeyOperations (void) {
 // Main display function
 void Display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    KeyOperations();
     
     draw_axis();
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,LightGlobalAmbient);
+    glLoadIdentity();
+    camera3P.setLook();
+    /*
+    KeyOperations();
+    
+    
+    //glLightModelfv(GL_LIGHT_MODEL_AMBIENT,LightGlobalAmbient);
     
     //Vector3 vDir1=cameraL1.getView()-cameraL1.getPosition();
     //DisplayText(0,0,vDir1.toString(),0,0,0);
@@ -760,34 +765,37 @@ void Display(void) {
         cameraL1.setLook();
     }
 
-    glPolygonMode(GL_FRONT,GL_FILL);
-    glPolygonMode(GL_BACK,GL_LINE);
+    //glPolygonMode(GL_FRONT,GL_FILL);
+    //glPolygonMode(GL_BACK,GL_LINE);
+
 
     robot.drawRobot();
     glPushMatrix();
-        DrawWorld();
+                draw_axis();
+        //DrawWorld();
     glPopMatrix();
         
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, Light0Ambient);		// Setup The Ambient Light
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, Light0Diffuse);		// Setup The Diffuse Light
-    glLightfv(GL_LIGHT0, GL_SPECULAR,Light0Specular);       // Setup The Specular Light
-    glLightfv(GL_LIGHT0, GL_POSITION,Light0Position);	// Position The Light
-    glEnable(GL_LIGHT0);
-   
-    glLightfv(GL_LIGHT1, GL_AMBIENT, Light1Ambient);		// Setup The Ambient Light
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, Light1Diffuse);		// Setup The Diffuse Light
-    glLightfv(GL_LIGHT1, GL_SPECULAR,Light1Specular);       // Setup The Specular Light
-    glLightfv(GL_LIGHT1, GL_POSITION,Light1Position);	// Position The Light
-    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION,Light1Direction);	// Direction The Light
-    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,10.0);
-    glLighti(GL_LIGHT1, GL_SPOT_EXPONENT,64);
-    glEnable(GL_LIGHT1);   
+//    glLightfv(GL_LIGHT0, GL_AMBIENT, Light0Ambient);		// Setup The Ambient Light
+//    glLightfv(GL_LIGHT0, GL_DIFFUSE, Light0Diffuse);		// Setup The Diffuse Light
+//    glLightfv(GL_LIGHT0, GL_SPECULAR,Light0Specular);       // Setup The Specular Light
+//    glLightfv(GL_LIGHT0, GL_POSITION,Light0Position);	// Position The Light
+//    glEnable(GL_LIGHT0);
+//   
+//    glLightfv(GL_LIGHT1, GL_AMBIENT, Light1Ambient);		// Setup The Ambient Light
+//    glLightfv(GL_LIGHT1, GL_DIFFUSE, Light1Diffuse);		// Setup The Diffuse Light
+//    glLightfv(GL_LIGHT1, GL_SPECULAR,Light1Specular);       // Setup The Specular Light
+//    glLightfv(GL_LIGHT1, GL_POSITION,Light1Position);	// Position The Light
+//    glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION,Light1Direction);	// Direction The Light
+//    glLightf(GL_LIGHT1, GL_SPOT_CUTOFF,10.0);
+//    glLighti(GL_LIGHT1, GL_SPOT_EXPONENT,64);
+//    glEnable(GL_LIGHT1);   
 
      } else {
          DisplayText(0,glutGet(GLUT_WINDOW_HEIGHT)-18, helpText,0.0, 0.5, 0.0);
          DisplayText(400,glutGet(GLUT_WINDOW_HEIGHT)-90, helpText1,0.0, 0.5, 0.5);
     }
+     */
     glutSwapBuffers();
 }
 
@@ -1001,12 +1009,12 @@ void draw_axis ( )
 }
 
 //// Program entering point
-//int main(int argc, char **argv) {
-//    InitLogic();
-//    InitGlut(argc, argv);
-//    InitGl();
-//    RegisterCallbacks();
-//    GlutMenu();
-//    glutMainLoop();
-//    ExitApp(0);
-//}
+int main(int argc, char **argv) {
+    InitLogic();
+    InitGlut(argc, argv);
+    InitGl();
+    RegisterCallbacks();
+    GlutMenu();
+    glutMainLoop();
+    ExitApp(0);
+}

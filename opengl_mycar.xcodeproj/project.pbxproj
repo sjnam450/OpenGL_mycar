@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C70A6FE71DE5763E0011282D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C70A6FE51DE5763E0011282D /* Car.cpp */; };
-		C7806AFA1DDCB2DF0019DE30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806AF91DDCB2DF0019DE30 /* main.cpp */; };
+		C72F9EF81DEF20060030FECD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806AF91DDCB2DF0019DE30 /* main.cpp */; };
 		C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B021DDCB35C0019DE30 /* Camera.cpp */; };
 		C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B071DDCB35C0019DE30 /* Robot.cpp */; };
 		C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B0C1DDCB35C0019DE30 /* Vector3.cpp */; };
@@ -194,8 +194,8 @@
 				C70A6FE71DE5763E0011282D /* Car.cpp in Sources */,
 				C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */,
 				C796EBA61DE8015C00FAD14E /* list.cpp in Sources */,
+				C72F9EF81DEF20060030FECD /* main.cpp in Sources */,
 				C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */,
-				C7806AFA1DDCB2DF0019DE30 /* main.cpp in Sources */,
 				C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */,
 				C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */,
 				C796EBA01DE8006F00FAD14E /* objLoader.cpp in Sources */,

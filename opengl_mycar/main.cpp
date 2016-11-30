@@ -33,11 +33,108 @@ const GLfloat Gray5Color4[]  = { 0.5, 0.5, 0.5, 1.0 };
 const GLfloat Gray4Color4[]  = { 0.4, 0.4, 0.4, 1.0 };
 
 
+typedef float Point3DF[3];
+typedef int Point3DI[3];
+
+float colors[9][3] = {{0, 0, 0},		//	White
+    {0, 0, 0 },		//	Black
+    {1, 0, 0 },		//	Red
+    {0, 1, 0 },		//	Green
+    {0, 0, 1 },		//	Blue
+    {0, 1, 1 },		//	Cyan
+    {1, 0, 1 },		//	Magenta
+    {1, 1, 0},
+    {1, 0.5, 0}
+};	//	Yellow
+
 
 //texture
 //glTexture m_FloorTexture;
 
 Car *car;
+
+class Face {
+public:
+    Point3DI vtx;
+    Point3DF nml;
+    int iedge;
+    Point3DF clr;
+    
+    
+    void set(int x, int y, int z) {
+        vtx[0] = x;
+        vtx[1] = y;
+        vtx[2] = z;
+    };
+    
+    
+    
+};
+
+Face *fl;
+
+class Vertex {
+public:
+    Point3DF pos;
+    Point3DF npos;
+    Point3DF nml;
+    Point3DF clr;
+    int iedge;
+    int iface;
+    
+    Vertex() {
+        
+    }
+    
+    
+    void set(float x, float y, float z) {
+        pos[0] = x;
+        pos[1] = y;
+        pos[2] = z;
+        
+        npos[0] = x;
+        npos[1] = y;
+        npos[2] = z;
+        
+    };
+    float getx() {
+        return pos[0];
+    };
+    float gety() {
+        return pos[1];
+    };
+    float getz() {
+        return pos[2];
+    };
+    
+    void get(Point3DF p) {
+        p[0] = pos[0];
+        p[1] = pos[1];
+        p[2] = pos[2];
+    }
+    
+    
+};
+
+
+int nvl;
+Vertex * vl;
+
+class Object {
+    Vertex *vl;
+    //    Edge *el;
+    Face *fl;
+    int nvl, nel, nfl;
+    
+public:
+    void build ( );
+    void draw ( );
+    void transform();
+    void gotoDefault();
+    
+};
+
+Object myObject;
 
 void keyboard(unsigned char key, int x, int y);
 void StructFloor (void);
@@ -48,24 +145,28 @@ void init() {
     glClearColor(1.0, 1.0, 1.0, 0.0); //background
 //    glClearColor (0.0, 0.0, 0.0, 0.0);
 //    
-//    glEnable ( GL_DEPTH_TEST );
-//    glClearDepth(1.0);
-//    
-//    glEnable ( GL_CULL_FACE );
-//    glCullFace ( GL_BACK );
-//    
+    glEnable ( GL_DEPTH_TEST );
+    glClearDepth(1.0);
+    
+    glEnable ( GL_CULL_FACE );
+    glCullFace ( GL_BACK );
+//
 //    
 //    /* initialize viewing values  */
 //    glMatrixMode(GL_PROJECTION);
 //    glLoadIdentity();
         mode = 1;
     
+    //glMatrixMode(GL_MODELVIEW);
+    myObject.build ( );
     StructFloor();
+    
+    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
 //    
     //    glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
     //    gluLookAt (30.0f, 10.0f,10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );  //카메라
     
-    //glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
+    
     //gluLookAt (30, 10.0f, 10.0f, 0.0f, 00.0f, 00.0f, 0.0f, 1.0f, 0.0f );
     elephant=glGenLists(1);
 }
@@ -78,7 +179,7 @@ void init_car() {
         //glPushMatrix();
         
         
-        glBegin(GL_TRIANGLES);
+        glBegin(GL_POLYGON);
         //glColor3f(0.2, 0.5, 0.1);
         
         //glScalef(0.5,0.5,0.5);
@@ -101,6 +202,15 @@ void init_car() {
             
             //objData->textureList[i]->e
             glVertex3f(x,y,z);
+            
+            GLfloat xn = (GLfloat)objData->normalList[i]->e[0];
+            GLfloat yn = (GLfloat)objData->normalList[i]->e[1];
+            GLfloat zn = (GLfloat)objData->normalList[i]->e[2];
+
+            
+            glNormal3f(xn, yn, zn);
+            
+            
         }
         //printf("vertex cound : %d\n", count);
         glEnd();
@@ -166,6 +276,83 @@ void StructFloor (void)
     glEndList();
 }
 
+
+
+
+
+
+
+
+void Object::build ( )
+{
+    //  1. Build vertices
+    nvl = 6;
+    vl = (Vertex *) calloc ( nvl, sizeof(Vertex) );
+    vl[0].set ( 50.0f, 0.0f, 0.0f ); // XMAX = 0
+    vl[1].set (-50.0f, 0.0f, 0.0f ); // XMIN = 1
+    vl[2].set ( 0.0f, 50.0f, 0.0f ); // YMAX = 2
+    vl[3].set ( 0.0f,-50.0f, 0.0f ); // YMIN = 3
+    vl[4].set ( 0.0f, 0.0f, 50.0f ); // ZMAX = 4
+    vl[5].set ( 0.0f, 0.0f,-50.0f ); // ZMIN = 5
+    
+    //2. Build faces
+    
+    nfl = 8;
+    fl = (Face *) calloc (nfl, sizeof(Face) );
+    fl[0].set ( 4, 0, 2 );
+    fl[1].set ( 4, 2, 1 );
+    fl[2].set ( 4, 1, 3 );
+    fl[3].set ( 4, 3, 0 );
+    fl[4].set ( 5, 0, 3 );
+    fl[5].set ( 5, 3, 1 );
+    fl[6].set ( 5, 1, 2 );
+    fl[7].set ( 5, 2, 0 );
+}
+
+
+//윙드엣지 구성하고 노멀벡터를 구하자 버텍스에서 주변 페이스먼저 구해야하니가 윙드엣지가 필요한대
+
+// 사실 없어도 구할수잇음
+
+void Object::draw( )
+{
+    
+    int i,j;
+    glLineWidth(3.0f);
+    
+    //npos만 그린다
+    for (i=0; i<nfl; i++) { //all face
+        glBegin(GL_LINE_LOOP);
+        glColor3fv(colors[2]);
+        glVertex3fv(vl[fl[i].vtx[0]].npos);
+        glVertex3fv(vl[fl[i].vtx[1]].npos);
+        glVertex3fv(vl[fl[i].vtx[2]].npos);
+        glEnd();
+        
+        
+        glBegin(GL_POLYGON);
+        glColor3fv(colors[8]);
+        glVertex3fv(vl[fl[i].vtx[0]].npos);
+        glVertex3fv(vl[fl[i].vtx[1]].npos);
+        glVertex3fv(vl[fl[i].vtx[2]].npos);
+        glEnd();
+        
+        //printf("for debug %f, %f, %f\n", vl[fl[i].vtx[0]].pos, vl[fl[i].vtx[1]].pos, vl[fl[i].vtx[2]].pos);
+    }
+}
+
+
+
+
+void Object::gotoDefault() {
+    
+    for (int i=0; i<nvl; i++) {
+        //vl[i].npos = vl[i].pos;
+        memcpy(vl[i].npos, vl[i].pos, sizeof(Point3DF));
+    }
+    
+}
+
 void draw_car() {
     
     //floor
@@ -184,49 +371,18 @@ void draw_car() {
 //    glColor3f(1.0,0.23,0.27);
     
     
-    glScalef(0.01, 0.01, 0.01);
-    //glTranslatef(car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2]);
-    glTranslatef(50, 0, 0);
+    glScalef(1, 1, 1);
+    glTranslatef(car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2]);
+    glTranslatef(0, 0, 0);
     //glRotatef(elephantrot,0,1,0);
     
-    //glCallList(elephant);
-    
-    
-    
-    glBegin(GL_POINTS);
-    //glColor3f(0.2, 0.5, 0.1);
-    
-    //glScalef(0.5,0.5,0.5);
-    //glbi
-    //        while(!(feof(fp)))
-    //        {
-    //            read=fscanf(fp,"%c %f %f %f",&ch,&x,&y,&z);
-    //            if(read==4&&ch=='v')
-    //            {
-    //                glVertex3f(x,y,z);
-    //            }
-    //        }
-    
-    for (int i=0; i<objData->vertexCount; i++) {
-        //objData->faceList[i]->
-    //    count++;
-        GLfloat x = (GLfloat)objData->vertexList[i]->e[0];
-        GLfloat y = (GLfloat)objData->vertexList[i]->e[1];
-        GLfloat z = (GLfloat)objData->vertexList[i]->e[2];
-        //t(<#GLenum target#>, <#GLuint texture#>)
-        
-        //objData->textureList[i]->e
-        glVertex3f(x,y,z);
-    }
-    //printf("vertex cound : %d\n", count);
-    glEnd();
-    
-    
-    
-    
+    glCallList(elephant);
+   
+    //myObject.draw();
+
     glPopMatrix();
-    elephantrot=elephantrot+0.6;
-    if(elephantrot>360)elephantrot=elephantrot-360;
+//    elephantrot=elephantrot+0.6;
+//    if(elephantrot>360)elephantrot=elephantrot-360;
     
     
     
@@ -275,6 +431,20 @@ void draw_axis2 ( )
     
 }
 
+//Resize display
+void Reshape(GLint newWidth, GLint newHeight)
+{
+    glViewport(0,0, (GLsizei)newWidth, (GLsizei)newHeight);
+    
+    glMatrixMode(GL_PROJECTION);     // Select The Projection Matrix
+    glLoadIdentity();                // Reset The Projection Matrix
+    // Calculate The Aspect Ratio And Set The Clipping Volume
+    if (newHeight == 0) newHeight = 1; // Zero-division prevention
+    gluPerspective(30.0f, (GLfloat)newWidth/(GLfloat)newHeight, 0.1, 100.0);
+    
+    glMatrixMode(GL_MODELVIEW);      // Select The Modelview Matrix
+}
+
 void display() {
     //	1. clear buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -294,7 +464,8 @@ void display() {
       //  gluLookAt (20.0f, 10.0f,20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
     }
     else if (mode == 1) {
-            gluLookAt (0.0f, 0.0f, 0.0f, 100, 100, 100, 0.0f, 1.0f, 0.0f );
+            //gluLookAt (0.0f, 0.0f, 0.0f, 200, 200, 200, 0.0f, 1.0f, 0.0f );
+            gluLookAt (10.0f, 5.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
     }
 
     
@@ -323,7 +494,7 @@ void keyboard(unsigned char key, int x, int y) {
             //trans + (X, Y, Z)
         case 'z':
             printf("z input\n");
-            car->currentPosition.v[2] -= 5.0f;
+            car->currentPosition.v[0] -= 5.0f;
             break;
             
         case 'p':
@@ -390,8 +561,17 @@ int main(int argc,  char ** argv) {
     // 5. light system init
     init();
     init_car();
+    
+    
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
+//    gluPerspective(30.0f, (GLfloat)newWidth/(GLfloat)newHeight, 0.1, 100.0);
 
+    glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(display);
+    
+    //glutReshapeFunc(Reshape);
 //    glutMouseFunc (mouse);
 //    glutMotionFunc (motion);
     glutKeyboardFunc (keyboard);
