@@ -11,6 +11,7 @@
 #include <iostream>
 //#include "objLoader.h"
 #include "Car.hpp"
+#include "MyCamera.hpp"
 
 
 #define WINDOW_WIDTH    800
