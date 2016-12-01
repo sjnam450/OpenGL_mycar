@@ -25,6 +25,7 @@
 //float elephantrot;
 int mode; //0 car, 1 is eye bird
 
+
 int floorListNum;
 
 const GLfloat WhiteColor4[]  = { 1.0, 1.0, 1.0, 1.0 };
@@ -53,6 +54,7 @@ float colors[9][3] = {{0, 0, 0},		//	White
 //glTexture m_FloorTexture;
 
 Car *car;
+MyCamera *myCamera;
 
 class Face {
 public:
@@ -149,7 +151,7 @@ void init() {
     
     glEnable ( GL_CULL_FACE );
     glCullFace ( GL_BACK );
-    mode = 1;
+    myCamera->mode = WORLD;
     
     //glMatrixMode(GL_MODELVIEW);
     myObject.build ( );
@@ -346,18 +348,11 @@ void display() {
     glLoadIdentity();
     
     //1.5 camera
-    
-    //gluLookAt (0.0f, 0.0f, 0.0f, 1000.0f, 1000.0f, 1000.0f, 0.0f, 1.0f, 0.0f );
-    if (mode ==0) {
-        
-        gluLookAt (car->currentPosition.v[0]-10, car->currentPosition.v[1]+5, car->currentPosition.v[2]-10,
-                   car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2],
-                   0.0f, 1.0f, 0.0f );
-      //  gluLookAt (20.0f, 10.0f,20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+    if (myCamera->mode == CAR) {
+        myCamera->setBehindCar(car->currentPosition, car->directionalVector);
     }
-    else if (mode == 1) {
-            //gluLookAt (0.0f, 0.0f, 0.0f, 200, 200, 200, 0.0f, 1.0f, 0.0f );
-            gluLookAt (10.0f, 5.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+    else if (myCamera->mode == WORLD) {
+        myCamera->viewDefault();
     }
 
     
@@ -392,12 +387,12 @@ void keyboard(unsigned char key, int x, int y) {
             
         case 'p':
             printf("p input\n");
-            mode = 1;
+            myCamera->mode = WORLD;
             break;
             
         case 'q':
             printf("q input\n");
-            mode = 0;
+            myCamera->mode = CAR;
             break;
 
         case 'a':
@@ -439,6 +434,9 @@ int main(int argc,  char ** argv) {
     car = new Car();
     
     // 4. camera object init
+    myCamera = new MyCamera();
+    
+    
     
     // 5. light system init
     init();
