@@ -9,7 +9,7 @@
 //#include <GLKit/glex>
 #include <GLUT/glut.h>
 #include <iostream>
-#include "objLoader.h"
+//#include "objLoader.h"
 #include "Car.hpp"
 
 
@@ -19,9 +19,9 @@
 #define WINDOW_X_OFFSET 100
 #define WINDOW_Y_OFFSET 100
 
-objLoader *objData;
-GLuint elephant;
-float elephantrot;
+//objLoader *objData;
+
+//float elephantrot;
 int mode; //0 car, 1 is eye bird
 
 int floorListNum;
@@ -143,83 +143,19 @@ void StructFloor (void);
 void init() {
     /* select clearing color 	*/
     glClearColor(1.0, 1.0, 1.0, 0.0); //background
-//    glClearColor (0.0, 0.0, 0.0, 0.0);
-//    
     glEnable ( GL_DEPTH_TEST );
     glClearDepth(1.0);
     
     glEnable ( GL_CULL_FACE );
     glCullFace ( GL_BACK );
-//
-//    
-//    /* initialize viewing values  */
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-        mode = 1;
+    mode = 1;
     
     //glMatrixMode(GL_MODELVIEW);
     myObject.build ( );
     StructFloor();
-    
-    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
-//    
-    //    glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
-    //    gluLookAt (30.0f, 10.0f,10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );  //카메라
-    
-    
-    //gluLookAt (30, 10.0f, 10.0f, 0.0f, 00.0f, 00.0f, 0.0f, 1.0f, 0.0f );
-    elephant=glGenLists(1);
 }
 
-void init_car() {
-    glPointSize(2.0);
-    int count=0;
-    glNewList(elephant, GL_COMPILE);
-    {
-        //glPushMatrix();
-        
-        
-        glBegin(GL_POLYGON);
-        //glColor3f(0.2, 0.5, 0.1);
-        
-        //glScalef(0.5,0.5,0.5);
-        //glbi
-        //        while(!(feof(fp)))
-        //        {
-        //            read=fscanf(fp,"%c %f %f %f",&ch,&x,&y,&z);
-        //            if(read==4&&ch=='v')
-        //            {
-        //                glVertex3f(x,y,z);
-        //            }
-        //        }
-        for (int i=0; i<objData->vertexCount; i++) {
-            //objData->faceList[i]->
-            count++;
-            GLfloat x = (GLfloat)objData->vertexList[i]->e[0];
-            GLfloat y = (GLfloat)objData->vertexList[i]->e[1];
-            GLfloat z = (GLfloat)objData->vertexList[i]->e[2];
-            //t(<#GLenum target#>, <#GLuint texture#>)
-            
-            //objData->textureList[i]->e
-            glVertex3f(x,y,z);
-            
-            GLfloat xn = (GLfloat)objData->normalList[i]->e[0];
-            GLfloat yn = (GLfloat)objData->normalList[i]->e[1];
-            GLfloat zn = (GLfloat)objData->normalList[i]->e[2];
 
-            
-            glNormal3f(xn, yn, zn);
-            
-            
-        }
-        //printf("vertex cound : %d\n", count);
-        glEnd();
-    }
-    
-    //glPopMatrix();
-    glEndList();
-
-}
 
 //Set Material Properties Specular, ambient, diffusion and shines
 void SetMaterial(const GLfloat spec[],const GLfloat amb[],const GLfloat diff[], int shin)
@@ -353,51 +289,6 @@ void Object::gotoDefault() {
     
 }
 
-void draw_car() {
-    
-    //floor
-//    glPushMatrix();
-//    glPushAttrib(GL_TEXTURE_BIT|GL_CURRENT_BIT|GL_ENABLE_BIT|GL_LIGHTING_BIT);
-//    //glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL,GL_SEPARATE_SPECULAR_COLOR);
-//    glCallList(floorListNum);
-//    //glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL,GL_SINGLE_COLOR);
-//    glPopAttrib();
-//    glPopMatrix();
-    
-    
-    
-    glPushMatrix();
-//    glTranslatef(0,-40.00,-105);
-//    glColor3f(1.0,0.23,0.27);
-    
-    
-    glScalef(1, 1, 1);
-    glTranslatef(car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2]);
-    glTranslatef(0, 0, 0);
-    //glRotatef(elephantrot,0,1,0);
-    
-    glCallList(elephant);
-   
-    //myObject.draw();
-
-    glPopMatrix();
-//    elephantrot=elephantrot+0.6;
-//    if(elephantrot>360)elephantrot=elephantrot-360;
-    
-    
-    
-//    glPointSize(2.0f);
-//    glBegin(GL_POINTS);
-//    glColor3f(0.3, 0.5, 0.1);
-//    for (int i=0; i<objData->vertexCount; i++) {
-//        glVertex3dv(&objData->vertexList[i]->e[0]);
-//        glVertex3dv(&objData->vertexList[i]->e[1]);
-//        glVertex3dv(&objData->vertexList[i]->e[2]);
-//    }
-//    glEnd();
-
-
-}
 
 
 // Sets timer for refresh the display
@@ -452,14 +343,14 @@ void display() {
     //glMatrixMode(GL_PROJECTION);
     draw_axis2 ( );
     glLoadIdentity();
-    printf("car position : %f, %f, %f\n", car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2]);
+    
     //1.5 camera
     
     //gluLookAt (0.0f, 0.0f, 0.0f, 1000.0f, 1000.0f, 1000.0f, 0.0f, 1.0f, 0.0f );
     if (mode ==0) {
         
-        gluLookAt (car->currentPosition.v[0]-3, car->currentPosition.v[1], car->currentPosition.v[2]-3,
-                   car->currentPosition.v[0]-10, car->currentPosition.v[1]+10, car->currentPosition.v[2]-10,
+        gluLookAt (car->currentPosition.v[0]-10, car->currentPosition.v[1]+5, car->currentPosition.v[2]-10,
+                   car->currentPosition.v[0], car->currentPosition.v[1], car->currentPosition.v[2],
                    0.0f, 1.0f, 0.0f );
       //  gluLookAt (20.0f, 10.0f,20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
     }
@@ -471,7 +362,8 @@ void display() {
     
 //    //	2. draw axis
     
-    draw_car();
+    //draw_car();
+    car->draw_car();
     
 //    glPolygonMode(GL_FRONT,GL_FILL);
 //    glPolygonMode(GL_BACK,GL_LINE);
@@ -492,9 +384,9 @@ void display() {
 void keyboard(unsigned char key, int x, int y) {
     switch (key) {
             //trans + (X, Y, Z)
-        case 'z':
-            printf("z input\n");
-            car->currentPosition.v[0] -= 5.0f;
+        case 'w':
+            printf("w input\n");
+            car->move();
             break;
             
         case 'p':
@@ -507,6 +399,15 @@ void keyboard(unsigned char key, int x, int y) {
             mode = 0;
             break;
 
+        case 'a':
+            printf("left rotate\n");
+            car->yaw(CAR_ROTATE::LEFT);
+            break;
+        case 'd':
+            printf("right rotate\n");
+            car->yaw(CAR_ROTATE::RIGHT);
+            break;
+
     
         default:
             break;
@@ -515,35 +416,14 @@ void keyboard(unsigned char key, int x, int y) {
 }
 
 int main(int argc,  char ** argv) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    
-//    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-//    glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-//    glutInitWindowPosition(WINDOW_X_OFFSET, WINDOW_Y_OFFSET);
-//    glutInit(&argc, argv);
-//    glutCreateWindow("OpenGL Robot");
-//    glutWarpPointer(glutGet(GLUT_WINDOW_WIDTH) >> 1,glutGet(GLUT_WINDOW_HEIGHT) >> 1);
-    
-    
+
 #pragma mark --
 #pragma mark Todo
-    //1. OBJ LOADER ADD
-    objData = new objLoader();
-    //objData->load("Police_car.obj");
-    //objData->load("Apple.obj");
-    objData->load("porsche.obj");
-    
-    
-    printf("Number of vertices: %i\n", objData->vertexCount);
-    printf("Number of vertex normals: %i\n", objData->normalCount);
-    printf("Number of texture coordinates: %i\n", objData->textureCount);
     
     //2. load texture
 //    GLuint tex;
 //    glGenTextures(1, &tex);
 //    glBindTexture(GL_TEXTURE_2D, tex);
-    
     
     
     //glut init
@@ -556,11 +436,12 @@ int main(int argc,  char ** argv) {
     
     // 3. car object init
     car = new Car();
-    car->currentPosition = Vector3(0, 0, 0);
+    
     // 4. camera object init
+    
     // 5. light system init
     init();
-    init_car();
+    car->init_car();
     
     
     glMatrixMode(GL_PROJECTION);
@@ -570,10 +451,6 @@ int main(int argc,  char ** argv) {
 
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(display);
-    
-    //glutReshapeFunc(Reshape);
-//    glutMouseFunc (mouse);
-//    glutMotionFunc (motion);
     glutKeyboardFunc (keyboard);
     glutTimerFunc(0,Timer_sj,0);
     glutMainLoop();
