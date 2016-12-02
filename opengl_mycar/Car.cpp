@@ -75,27 +75,51 @@ void Car::init_car() {
         //glPushMatrix();
         
         
-        glBegin(GL_POLYGON);
-        for (int i=0; i<objData->vertexCount; i++) {
+        glBegin(GL_TRIANGLES);
+        glShadeModel(GL_SMOOTH);
+        for (int i=0; i<objData->faceCount; i++) {
             //objData->faceList[i]->
             count++;
-            GLfloat x = (GLfloat)objData->vertexList[i]->e[0];
-            GLfloat y = (GLfloat)objData->vertexList[i]->e[1];
-            GLfloat z = (GLfloat)objData->vertexList[i]->e[2];
+//            GLfloat x = (GLfloat)objData->vertexList[i]->e[0];
+//            GLfloat y = (GLfloat)objData->vertexList[i]->e[1];
+//            GLfloat z = (GLfloat)objData->vertexList[i]->e[2];
+//            
+//            //TODO :: TEXTURE MAPPING
+//            
+//            glVertex3f(x,y,z);
             
-            //TODO :: TEXTURE MAPPING
+//            GLfloat xn = (GLfloat)objData->normalList[i]->e[0];
+//            GLfloat yn = (GLfloat)objData->normalList[i]->e[1];
+//            GLfloat zn = (GLfloat)objData->normalList[i]->e[2];
             
-            glVertex3f(x,y,z);
+            //objData->faceList
+            //glver
+            int vertexinde0 =  objData->faceList[i]->vertex_index[0];
+            int vertexinde1 =  objData->faceList[i]->vertex_index[1];
+            int vertexinde2 =  objData->faceList[i]->vertex_index[2];
+            int vertexinde3 =  objData->faceList[i]->vertex_index[3];
+            printf("vi : %d, %d, %d, %d\n", vertexinde0, vertexinde1, vertexinde2, vertexinde3);
             
-            GLfloat xn = (GLfloat)objData->normalList[i]->e[0];
-            GLfloat yn = (GLfloat)objData->normalList[i]->e[1];
-            GLfloat zn = (GLfloat)objData->normalList[i]->e[2];
+            objData->vertexList[vertexinde0]->e[0];
+            objData->vertexList[vertexinde0]->e[1];
+            objData->vertexList[vertexinde0]->e[2];
             
-            
-            glNormal3f(xn, yn, zn);
+            glVertex3f((GLfloat)objData->vertexList[vertexinde0]->e[0], (GLfloat)objData->vertexList[vertexinde0]->e[1], (GLfloat)objData->vertexList[vertexinde0]->e[2]);
+
+            glVertex3f((GLfloat)objData->vertexList[vertexinde1]->e[0], (GLfloat)objData->vertexList[vertexinde1]->e[1], (GLfloat)objData->vertexList[vertexinde1]->e[2]);
+
+            glVertex3f((GLfloat)objData->vertexList[vertexinde2]->e[0], (GLfloat)objData->vertexList[vertexinde2]->e[1], (GLfloat)objData->vertexList[vertexinde2]->e[2]);
+
+            //glVertex3fv((GLfloat*)objData->vertexList[vertexinde1]->e);
+            //glVertex3fv((GLfloat*)objData->vertexList[vertexinde2]->e);
+            //glvertex3v(&objData->vertexList[vertexinde0]->e);
+            //glver
+            printf("\n\n");
+            //glNormal3f(xn, yn, zn);
             
             
         }
+        
         //printf("vertex cound : %d\n", count);
         glEnd();
     }
