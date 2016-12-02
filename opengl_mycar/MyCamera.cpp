@@ -51,13 +51,14 @@ void MyCamera::set( Vector3 position, Vector3 view)
     upVector = Vector3(0,1,0);
 }
 
-void MyCamera::setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec) {
-    gluLookAt (carPosition.v[0]-0.3, 0.13, carPosition.v[2]-0.01,
-               carPosition.v[0],  0, carPosition.v[2],
+void MyCamera::setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec, float degree) {
+    float radian = -degree*PI/180.0f ;
+    gluLookAt (carPosition.v[0]-cos(radian)*60, 30, carPosition.v[2]-sinf(radian)*60,
+               carPosition.v[0] ,  0, carPosition.v[2],
                0.0f, 1.0f, 0.0f );
    
 }
 
 void MyCamera::viewDefault() {
-    gluLookAt (10.0f, 5.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+    gluLookAt (400, 400.0f, 400.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
 }

@@ -30,6 +30,7 @@ class Car {
 public:
     Car();
     void move();
+    void moveback();
     void rotate();
     void yaw(CAR_ROTATE rotate);
     void init_car();

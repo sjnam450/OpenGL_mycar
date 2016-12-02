@@ -349,7 +349,7 @@ void display() {
     
     //1.5 camera
     if (myCamera->mode == CAR) {
-        myCamera->setBehindCar(car->currentPosition, car->directionalVector);
+        myCamera->setBehindCar(car->currentPosition, car->directionalVector, car->degree);
     }
     else if (myCamera->mode == WORLD) {
         myCamera->viewDefault();
@@ -384,6 +384,10 @@ void keyboard(unsigned char key, int x, int y) {
             printf("w input\n");
             car->move();
             break;
+        case 's':
+            printf("w input\n");
+            car->moveback();
+            break;
             
         case 'p':
             printf("p input\n");
@@ -403,6 +407,26 @@ void keyboard(unsigned char key, int x, int y) {
             printf("right rotate\n");
             car->yaw(CAR_ROTATE::RIGHT);
             break;
+            
+//camera control
+        case 'i':
+            //printf("right rotate\n");
+            myCamera->camera_y += 0.00001;
+            break;
+            
+        case 'k':
+            myCamera->camera_y -= 0.00001;
+            break;
+            
+        case 'j':
+            break;
+            
+        case 'l':
+            break;
+
+
+
+
 
     
         default:
@@ -445,8 +469,9 @@ int main(int argc,  char ** argv) {
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
-//    gluPerspective(30.0f, (GLfloat)newWidth/(GLfloat)newHeight, 0.1, 100.0);
+    //glOrtho(-100.0, 100.0, -100.0, 100.0, -500.0, 500.0);
+    //glOrtho(0.0f, 800, 600, 0.0, 0.0, 1.0);
+    gluPerspective(70.0f, (GLfloat)800/(GLfloat)600, 0.1, 10000.0);
 
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(display);

@@ -32,6 +32,14 @@ void Car::move() {
     printf("car pos %f, %f, %f\nd", currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
 }
 
+void Car::moveback() {
+    
+    currentPosition.v[0] -= directionalVector.v[0] * speed;
+    currentPosition.v[2] -= directionalVector.v[2] * speed;
+    printf("car pos %f, %f, %f\nd", currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
+}
+
+
 // Robot rotation
 void Car::yaw(CAR_ROTATE rotate)
 {
