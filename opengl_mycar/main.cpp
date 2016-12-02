@@ -22,12 +22,6 @@
 #define WINDOW_Y_OFFSET 100
 
 
-//objLoader *objData;
-
-//float elephantrot;
-int mode; //0 car, 1 is eye bird
-
-
 int floorListNum;
 
 const GLfloat WhiteColor4[]  = { 1.0, 1.0, 1.0, 1.0 };
@@ -59,90 +53,11 @@ Car *car;
 MyCamera *myCamera;
 Track *track;
 
-class Face {
-public:
-    Point3DI vtx;
-    Point3DF nml;
-    int iedge;
-    Point3DF clr;
-    
-    
-    void set(int x, int y, int z) {
-        vtx[0] = x;
-        vtx[1] = y;
-        vtx[2] = z;
-    };
-    
-    
-    
-};
-
-Face *fl;
-
-class Vertex {
-public:
-    Point3DF pos;
-    Point3DF npos;
-    Point3DF nml;
-    Point3DF clr;
-    int iedge;
-    int iface;
-    
-    Vertex() {
-        
-    }
-    
-    
-    void set(float x, float y, float z) {
-        pos[0] = x;
-        pos[1] = y;
-        pos[2] = z;
-        
-        npos[0] = x;
-        npos[1] = y;
-        npos[2] = z;
-        
-    };
-    float getx() {
-        return pos[0];
-    };
-    float gety() {
-        return pos[1];
-    };
-    float getz() {
-        return pos[2];
-    };
-    
-    void get(Point3DF p) {
-        p[0] = pos[0];
-        p[1] = pos[1];
-        p[2] = pos[2];
-    }
-    
-    
-};
-
-
-int nvl;
-Vertex * vl;
-
-class Object {
-    Vertex *vl;
-    //    Edge *el;
-    Face *fl;
-    int nvl, nel, nfl;
-    
-public:
-    void build ( );
-    void draw ( );
-    void transform();
-    void gotoDefault();
-    
-};
-
-Object myObject;
+bool buffer[256]; //keyboard
 
 void keyboard(unsigned char key, int x, int y);
+void keyboardUp( int key, int x, int y );
+void KeyOperations();
 void StructFloor (void);
 
 void init() {
@@ -157,7 +72,8 @@ void init() {
     
     
     //glMatrixMode(GL_MODELVIEW);
-    myObject.build ( );
+    
+    
     StructFloor();
 }
 
@@ -219,84 +135,6 @@ void StructFloor (void)
 }
 
 
-
-
-
-
-
-
-void Object::build ( )
-{
-    //  1. Build vertices
-    nvl = 6;
-    vl = (Vertex *) calloc ( nvl, sizeof(Vertex) );
-    vl[0].set ( 50.0f, 0.0f, 0.0f ); // XMAX = 0
-    vl[1].set (-50.0f, 0.0f, 0.0f ); // XMIN = 1
-    vl[2].set ( 0.0f, 50.0f, 0.0f ); // YMAX = 2
-    vl[3].set ( 0.0f,-50.0f, 0.0f ); // YMIN = 3
-    vl[4].set ( 0.0f, 0.0f, 50.0f ); // ZMAX = 4
-    vl[5].set ( 0.0f, 0.0f,-50.0f ); // ZMIN = 5
-    
-    //2. Build faces
-    
-    nfl = 8;
-    fl = (Face *) calloc (nfl, sizeof(Face) );
-    fl[0].set ( 4, 0, 2 );
-    fl[1].set ( 4, 2, 1 );
-    fl[2].set ( 4, 1, 3 );
-    fl[3].set ( 4, 3, 0 );
-    fl[4].set ( 5, 0, 3 );
-    fl[5].set ( 5, 3, 1 );
-    fl[6].set ( 5, 1, 2 );
-    fl[7].set ( 5, 2, 0 );
-}
-
-
-//윙드엣지 구성하고 노멀벡터를 구하자 버텍스에서 주변 페이스먼저 구해야하니가 윙드엣지가 필요한대
-
-// 사실 없어도 구할수잇음
-
-void Object::draw( )
-{
-    
-    int i,j;
-    glLineWidth(3.0f);
-    
-    //npos만 그린다
-    for (i=0; i<nfl; i++) { //all face
-        glBegin(GL_LINE_LOOP);
-        glColor3fv(colors[2]);
-        glVertex3fv(vl[fl[i].vtx[0]].npos);
-        glVertex3fv(vl[fl[i].vtx[1]].npos);
-        glVertex3fv(vl[fl[i].vtx[2]].npos);
-        glEnd();
-        
-        
-        glBegin(GL_POLYGON);
-        glColor3fv(colors[8]);
-        glVertex3fv(vl[fl[i].vtx[0]].npos);
-        glVertex3fv(vl[fl[i].vtx[1]].npos);
-        glVertex3fv(vl[fl[i].vtx[2]].npos);
-        glEnd();
-        
-        //printf("for debug %f, %f, %f\n", vl[fl[i].vtx[0]].pos, vl[fl[i].vtx[1]].pos, vl[fl[i].vtx[2]].pos);
-    }
-}
-
-
-
-
-void Object::gotoDefault() {
-    
-    for (int i=0; i<nvl; i++) {
-        //vl[i].npos = vl[i].pos;
-        memcpy(vl[i].npos, vl[i].pos, sizeof(Point3DF));
-    }
-    
-}
-
-
-
 // Sets timer for refresh the display
 void Timer_sj(int extra)
 {
@@ -349,6 +187,7 @@ void display() {
     //glMatrixMode(GL_PROJECTION);
     draw_axis2 ( );
     glLoadIdentity();
+    KeyOperations();
     
     //1.5 camera
     if (myCamera->mode == CAR) {
@@ -360,7 +199,7 @@ void display() {
 
     
 //	2. draw track
-    track->draw_track(800, 600);
+    track->draw_track(700, 600);
     
     //draw_car();
     car->draw_car();
@@ -381,64 +220,49 @@ void display() {
     glutSwapBuffers ();
 }
 
+void KeyOperations() {
+    
+    if (buffer['w']) {
+        printf("w input\n");
+        car->move();
+        
+    }
+    if (buffer['w']) {
+        printf("w input\n");
+        car->move();
+        
+    }
+    if (buffer['s']) {
+        printf("s input\n");
+        car->moveback();
+        
+    }
+    if (buffer['p']) {
+        printf("p input\n");
+        myCamera->mode = WORLD;
+    }
+    if (buffer['q']) {
+        printf("q input\n");
+        myCamera->mode = CAR;
+    }
+    if (buffer['a']) {
+        printf("left rotate\n");
+        car->yaw(CAR_ROTATE::LEFT);
+    }
+    if (buffer['d']) {
+        printf("right rotate\n");
+        car->yaw(CAR_ROTATE::RIGHT);
+    }
+}
 
 
 void keyboard(unsigned char key, int x, int y) {
-    switch (key) {
-            //trans + (X, Y, Z)
-        case 'w':
-            printf("w input\n");
-            car->move();
-            break;
-        case 's':
-            printf("w input\n");
-            car->moveback();
-            break;
-            
-        case 'p':
-            printf("p input\n");
-            myCamera->mode = WORLD;
-            break;
-            
-        case 'q':
-            printf("q input\n");
-            myCamera->mode = CAR;
-            break;
+    buffer[key] = true;
+}
 
-        case 'a':
-            printf("left rotate\n");
-            car->yaw(CAR_ROTATE::LEFT);
-            break;
-        case 'd':
-            printf("right rotate\n");
-            car->yaw(CAR_ROTATE::RIGHT);
-            break;
-            
-//camera control
-        case 'i':
-            //printf("right rotate\n");
-            myCamera->camera_y += 0.00001;
-            break;
-            
-        case 'k':
-            myCamera->camera_y -= 0.00001;
-            break;
-            
-        case 'j':
-            break;
-            
-        case 'l':
-            break;
-
-
-
-
-
-    
-        default:
-            break;
-
-    }
+void keyboardUp(unsigned char key, int x, int y )
+{
+    buffer[key] = false;
 }
 
 int main(int argc,  char ** argv) {
@@ -486,6 +310,7 @@ int main(int argc,  char ** argv) {
     glMatrixMode(GL_MODELVIEW);
     glutDisplayFunc(display);
     glutKeyboardFunc (keyboard);
+    glutKeyboardUpFunc(keyboardUp);
     glutTimerFunc(0,Timer_sj,0);
     glutMainLoop();
 

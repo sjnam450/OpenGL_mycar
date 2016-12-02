@@ -13,7 +13,7 @@
 Car::Car() {
     currentPosition =  Vector3(0, 0, 0);
     directionalVector = Vector3(1, 0, 0);
-    speed = 9.0f;
+    speed = 3.0f;
     degree = 0.0f;
     
     objData = new objLoader();
@@ -51,9 +51,9 @@ void Car::yaw(CAR_ROTATE rotate)
 
     
     if (rotate ==  CAR_ROTATE::LEFT)
-        degree += 5  * 1;
+        degree += 3  * 1;
     else
-        degree += 5  * -1;
+        degree += 3  * -1;
     
 //    if (degree > 45) {
 //        degree = 45;
