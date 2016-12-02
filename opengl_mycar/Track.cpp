@@ -79,21 +79,5 @@ void Track::draw_track(float R1,float R2) {
         glVertex3f(X,Y,Z);
     }
     glEnd();
-    
-    
-//    Y = 0;
-//    for( y=0;y<=181;y+=1)
-//    {
-//        X=R1*cos(c*y);
-//        Z=R1*sin(c*y);
-//        //Z=-1;
-//        glVertex3f(X,Y,Z);
-//        
-//        X=R2*cos(c*y);
-//        Z=R2*sin(c*y);
-//        //Z=-1;
-//        glVertex3f(X,Y,Z);
-//    }
-    glEnd();
     glPopMatrix();
 }

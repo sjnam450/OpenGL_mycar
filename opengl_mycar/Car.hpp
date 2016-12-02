@@ -37,7 +37,7 @@ public:
     void draw_car();
     
     float degree; //x축을 바라보며 1,0,0 방향벡터로 클럭와이즈로 각도계산을 한다
-    
+    float totalDistance;
     
     Vector3 currentPosition;
     Vector3 directionalVector;

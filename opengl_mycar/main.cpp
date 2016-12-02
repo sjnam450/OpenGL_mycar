@@ -198,23 +198,13 @@ void display() {
     }
 
     
-//	2. draw track
+    //	2. draw track
     track->draw_track(700, 600);
     
-    //draw_car();
+    //3. draw_car();
     car->draw_car();
     
-//    glPolygonMode(GL_FRONT,GL_FILL);
-//    glPolygonMode(GL_BACK,GL_LINE);
-    
-    //glPushMatrix();
-    //glTranslatef(0.25, 0, 0);
-    //draw_car();
-    //glPopMatrix();
-    //draw_car();
-//    
-//    myObject.draw ( );
-    
+    //4.hud
     
     //	4. swap buffers
     glutSwapBuffers ();

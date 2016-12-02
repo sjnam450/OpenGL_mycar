@@ -15,6 +15,7 @@ Car::Car() {
     directionalVector = Vector3(1, 0, 0);
     speed = 3.0f;
     degree = 0.0f;
+    totalDistance = 0.0f;
     
     objData = new objLoader();
     objData->load("Police_car.obj");
@@ -29,7 +30,9 @@ void Car::move() {
     
     currentPosition.v[0] += directionalVector.v[0] * speed;
     currentPosition.v[2] += directionalVector.v[2] * speed;
-    printf("car pos %f, %f, %f\nd", currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
+    
+    totalDistance += speed;
+    printf("car pos %f, %f, %f, %f\nd", currentPosition.v[0], currentPosition.v[1], currentPosition.v[2], totalDistance);
 }
 
 void Car::moveback() {
@@ -51,36 +54,13 @@ void Car::yaw(CAR_ROTATE rotate)
 
     
     if (rotate ==  CAR_ROTATE::LEFT)
-        degree += 3  * 1;
+        degree += 1.5 * 1;
     else
-        degree += 3  * -1;
-    
-//    if (degree > 45) {
-//        degree = 45;
-//        return;
-//    }
-//    else if(degree < -45) {
-//        degree = -45;
-//        return;
-//    }
-    
-//    directionalVector.v[0] = (float)(cos(temp_speed)*vView.v[0] - sin(temp_speed)*vView.v[2]);
-//    directionalVector.v[2] = (float)(sin(temp_speed)*vView.v[0] + cos(temp_speed)*vView.v[2]);
-    
-//    directionalVector.v[0] = 0;
-//    directionalVector.v[2] = 1;
+        degree += 1.5  * -1;
     
     rotateMatUtil(directionalVector, degree);
-
     directionalVector.normalize(); //Keep vector normalized
-    
     printf("car direct vector %f, %f, %f\nd", directionalVector.v[0], directionalVector.v[1], directionalVector.v[2]);
-    
-//    vView = m_vHeadView;
-//    m_vHeadView.v[0] = (float)(cos(speed)*vView.v[0] - sin(speed)*vView.v[2]);
-//    m_vHeadView.v[2] = (float)(sin(speed)*vView.v[0] + cos(speed)*vView.v[2]);
-//    m_vHeadView.normalize(); //Keep vector normalized
-    
 }
 
 void Car::init_car() {
@@ -119,8 +99,6 @@ void Car::init_car() {
         //printf("vertex cound : %d\n", count);
         glEnd();
     }
-    
-    //glPopMatrix();
     glEndList();
     
 }
