@@ -60,5 +60,5 @@ void MyCamera::setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec, floa
 }
 
 void MyCamera::viewDefault() {
-    gluLookAt (400, 400.0f, 400.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+    gluLookAt (700, 700.0f, 700.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
 }

@@ -12,6 +12,7 @@
 //#include "objLoader.h"
 #include "Car.hpp"
 #include "MyCamera.hpp"
+#include "Track.hpp"
 
 
 #define WINDOW_WIDTH    800
@@ -20,7 +21,7 @@
 #define WINDOW_X_OFFSET 100
 #define WINDOW_Y_OFFSET 100
 
-#define c 3.14/180
+
 //objLoader *objData;
 
 //float elephantrot;
@@ -56,6 +57,7 @@ float colors[9][3] = {{0, 0, 0},		//	White
 
 Car *car;
 MyCamera *myCamera;
+Track *track;
 
 class Face {
 public:
@@ -142,8 +144,6 @@ Object myObject;
 
 void keyboard(unsigned char key, int x, int y);
 void StructFloor (void);
-void track(float R1,float R2);
-
 
 void init() {
     /* select clearing color 	*/
@@ -154,6 +154,7 @@ void init() {
     glEnable ( GL_CULL_FACE );
     glCullFace ( GL_BACK );
     myCamera->mode = WORLD;
+    
     
     //glMatrixMode(GL_MODELVIEW);
     myObject.build ( );
@@ -309,20 +310,20 @@ void draw_axis2 ( )
     glLineWidth ( 2.0f );
     glBegin(GL_LINE_LOOP);
     glColor3f(1,0,0); //red x
-    glVertex3f(-500,0,0);
-    glVertex3f(500,0,0);
+    glVertex3f(-2000,0,0);
+    glVertex3f(2000,0,0);
     glEnd();
     
     glBegin(GL_LINE_LOOP);
     glColor3f(0,1,0); //green y
-    glVertex3f(0,-500,0);
-    glVertex3f(0,500,0);
+    glVertex3f(0,-2000,0);
+    glVertex3f(0,2000,0);
     glEnd();
     
     glBegin(GL_LINE_LOOP);
     glColor3f(0,0,1); //blue z
-    glVertex3f(0,0,-500);
-    glVertex3f(0,0,500);
+    glVertex3f(0,0,-2000);
+    glVertex3f(0,0,2000);
     glEnd();
     
 }
@@ -358,9 +359,8 @@ void display() {
     }
 
     
-//    //	2. draw track
-    
-    track(800, 600);
+//	2. draw track
+    track->draw_track(800, 600);
     
     //draw_car();
     car->draw_car();
@@ -381,26 +381,6 @@ void display() {
     glutSwapBuffers ();
 }
 
-void track(float R1,float R2) {
-    float X,Y,Z;
-    int  y;
-    glBegin(GL_QUAD_STRIP);
-    glColor3f(0.3,0.3,0.6);
-    Y = 0;
-    for( y=0;y<=361;y+=1)
-    {
-        X=R1*cos(c*y);
-        Z=R1*sin(c*y);
-        //Z=-1;
-        glVertex3f(X,Y,Z);
-        
-        X=R2*cos(c*y);
-        Z=R2*sin(c*y);
-        //Z=-1;
-        glVertex3f(X,Y,Z);
-    }
-    glEnd();
-}
 
 
 void keyboard(unsigned char key, int x, int y) {
@@ -485,6 +465,10 @@ int main(int argc,  char ** argv) {
     
     // 4. camera object init
     myCamera = new MyCamera();
+    
+    // 4.1 track
+    track = new Track();
+    
     
     
     

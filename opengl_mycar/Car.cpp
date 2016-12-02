@@ -11,9 +11,9 @@
 
 
 Car::Car() {
-    currentPosition =  Vector3(0, 0, 620);
+    currentPosition =  Vector3(0, 0, 0);
     directionalVector = Vector3(1, 0, 0);
-    speed = 3.0f;
+    speed = 9.0f;
     degree = 0.0f;
     
     objData = new objLoader();
