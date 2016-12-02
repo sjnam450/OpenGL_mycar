@@ -11,7 +11,7 @@
 
 
 Car::Car() {
-    currentPosition =  Vector3(0, 0, 0);
+    currentPosition =  Vector3(0, 0, 620);
     directionalVector = Vector3(1, 0, 0);
     speed = 3.0f;
     degree = 0.0f;
@@ -55,14 +55,14 @@ void Car::yaw(CAR_ROTATE rotate)
     else
         degree += 5  * -1;
     
-    if (degree > 45) {
-        degree = 45;
-        return;
-    }
-    else if(degree < -45) {
-        degree = -45;
-        return;
-    }
+//    if (degree > 45) {
+//        degree = 45;
+//        return;
+//    }
+//    else if(degree < -45) {
+//        degree = -45;
+//        return;
+//    }
     
 //    directionalVector.v[0] = (float)(cos(temp_speed)*vView.v[0] - sin(temp_speed)*vView.v[2]);
 //    directionalVector.v[2] = (float)(sin(temp_speed)*vView.v[0] + cos(temp_speed)*vView.v[2]);
@@ -128,6 +128,7 @@ void Car::init_car() {
 void Car::draw_car() {
     
     glPushMatrix();
+    glColor3f(0.2,0.4,0.1);
     glTranslatef(currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
     glRotatef(270, 0.0, 1.0 ,0.0);
     

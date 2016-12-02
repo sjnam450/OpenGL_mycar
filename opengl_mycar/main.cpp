@@ -20,6 +20,7 @@
 #define WINDOW_X_OFFSET 100
 #define WINDOW_Y_OFFSET 100
 
+#define c 3.14/180
 //objLoader *objData;
 
 //float elephantrot;
@@ -141,6 +142,7 @@ Object myObject;
 
 void keyboard(unsigned char key, int x, int y);
 void StructFloor (void);
+void track(float R1,float R2);
 
 
 void init() {
@@ -356,7 +358,9 @@ void display() {
     }
 
     
-//    //	2. draw axis
+//    //	2. draw track
+    
+    track(800, 600);
     
     //draw_car();
     car->draw_car();
@@ -376,6 +380,28 @@ void display() {
     //	4. swap buffers
     glutSwapBuffers ();
 }
+
+void track(float R1,float R2) {
+    float X,Y,Z;
+    int  y;
+    glBegin(GL_QUAD_STRIP);
+    glColor3f(0.3,0.3,0.6);
+    Y = 0;
+    for( y=0;y<=361;y+=1)
+    {
+        X=R1*cos(c*y);
+        Z=R1*sin(c*y);
+        //Z=-1;
+        glVertex3f(X,Y,Z);
+        
+        X=R2*cos(c*y);
+        Z=R2*sin(c*y);
+        //Z=-1;
+        glVertex3f(X,Y,Z);
+    }
+    glEnd();
+}
+
 
 void keyboard(unsigned char key, int x, int y) {
     switch (key) {
