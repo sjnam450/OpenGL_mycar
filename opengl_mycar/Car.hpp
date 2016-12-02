@@ -17,13 +17,22 @@
 #include "Vector3.h"
 #include "objLoader.h"
 
-//#define GL_CALLLIST_CAR     1
+
+
+//const GLfloat WhiteColor4[]  = { 1.0, 1.0, 1.0, 1.0 };
+//const GLfloat BlackColor4[]  = { 0.0, 0.0, 0.0, 1.0 };
+//const GLfloat Gray7Color4[]  = { 0.7, 0.7, 0.7, 1.0 };
+//const GLfloat Gray5Color4[]  = { 0.5, 0.5, 0.5, 1.0 };
+//const GLfloat Gray4Color4[]  = { 0.4, 0.4, 0.4, 1.0 };
+
 
 #define PI 3.141592653589793238462643
 
 enum CAR_ROTATE{
     LEFT = 0,
-    RIGHT = 1
+    RIGHT = 1,
+    UP = 2,
+    DOWN = 3
 };
 class Car {
 
@@ -33,10 +42,14 @@ public:
     void moveback();
     void rotate();
     void yaw(CAR_ROTATE rotate);
+    void pitch(CAR_ROTATE rotate);
     void init_car();
     void draw_car();
     
+    void SetMaterial2(GLfloat spec[], GLfloat amb[], GLfloat diff[], GLfloat shin[]);
+    
     float degree; //x축을 바라보며 1,0,0 방향벡터로 클럭와이즈로 각도계산을 한다
+    float pitch_degree;
     float totalDistance;
     
     Vector3 currentPosition;

@@ -24,11 +24,6 @@
 
 int floorListNum;
 
-const GLfloat WhiteColor4[]  = { 1.0, 1.0, 1.0, 1.0 };
-const GLfloat BlackColor4[]  = { 0.0, 0.0, 0.0, 1.0 };
-const GLfloat Gray7Color4[]  = { 0.7, 0.7, 0.7, 1.0 };
-const GLfloat Gray5Color4[]  = { 0.5, 0.5, 0.5, 1.0 };
-const GLfloat Gray4Color4[]  = { 0.4, 0.4, 0.4, 1.0 };
 
 
 typedef float Point3DF[3];
@@ -58,7 +53,7 @@ bool buffer[256]; //keyboard
 void keyboard(unsigned char key, int x, int y);
 void keyboardUp( int key, int x, int y );
 void KeyOperations();
-void StructFloor (void);
+//void StructFloor (void);
 
 void init() {
     /* select clearing color 	*/
@@ -67,6 +62,25 @@ void init() {
     glClearDepth(1.0);
     
     glEnable ( GL_CULL_FACE );
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glEnable( GL_LIGHTING ); //조명을 사용할 것이다.
+    glEnable( GL_LIGHT0 ); //조명 중 0 번 조명을 사용할 것이다.
+    
+    GLfloat AmbientLightValue[] = { 0.3f, 0.3f, 0.3f, 1.0f };
+    GLfloat DiffuseLightValue[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+    GLfloat SpecularLightValue[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat PositionLightValue[] = { 0.0f, 0.0f, 1.0f, 0.0f };
+    
+    
+    
+    
+    glLightfv( GL_LIGHT0, GL_AMBIENT, AmbientLightValue ); //Ambient 조명의 성질을 설정한다.
+    glLightfv( GL_LIGHT0, GL_DIFFUSE, DiffuseLightValue ); //Diffuse 조명의 성질을 설정한다.
+    glLightfv( GL_LIGHT0, GL_SPECULAR, SpecularLightValue ); //Specular 조명의 성질을 설정한다.
+    glLightfv( GL_LIGHT0, GL_POSITION, PositionLightValue ); //조명의 위치(광원)를 설정한다.
+    
     glCullFace ( GL_BACK );
     myCamera->mode = WORLD;
     
@@ -74,7 +88,7 @@ void init() {
     //glMatrixMode(GL_MODELVIEW);
     
     
-    StructFloor();
+    //StructFloor();
 }
 
 
@@ -88,51 +102,6 @@ void SetMaterial(const GLfloat spec[],const GLfloat amb[],const GLfloat diff[], 
     glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
 }
 
-void StructFloor (void)
-{
-    int i, j,jj,ii;
-    GLfloat x0=-10, z0=-10, x1=1, z1=1;
-    int count=15;       // Number of division of the flor block
-    int repeat=20;      // Repeat number of floor block
-    
-    floorListNum=glGenLists(1);
-    glNewList(floorListNum,GL_COMPILE);
-    SetMaterial(Gray7Color4,Gray7Color4,Gray4Color4,128);
-    //    if( m_FloorTexture.TextureID )
-    //    {
-    //        glEnable(GL_TEXTURE_2D);
-    //        glBindTexture(GL_TEXTURE_2D, m_FloorTexture.TextureID);			// Select Texture
-    //    }
-    glBegin(GL_QUADS);
-    
-    glNormal3f( 0.f,  1.f, 0.f);
-    for(jj = 1; jj <= repeat; jj++)
-        for(ii = 1; ii <= repeat; ii++)
-            for(j = 0; j < count; j++)
-                for(i = 0; i < count; i++)
-                {
-                    //glTexCoord2f(i * 1.f/count, j * 1.f/count);
-                    glVertex3f(x0+x1*ii + i * x1 * 1.f/count,
-                               0.0,
-                               z0+z1*jj + j * z1 * -1.f/count);
-                    //glTexCoord2f((i + 1) * 1.f/count, j * 1.f/count);
-                    glVertex3f(x0+x1*ii + (i + 1) * x1 * 1.f/count,
-                               0.0,
-                               z0+z1*jj + j * z1 * -1.f/count);
-                    //glTexCoord2f((i + 1) * 1.f/count, (j + 1) * 1.f/count);
-                    glVertex3f(x0+x1*ii + (i + 1) * x1 * 1.f/count,
-                               0.0,
-                               z0+z1*jj + (j + 1) * z1 * -1.f/count);
-                    //glTexCoord2f(i * 1.f/count, (j + 1) * 1.f/count);
-                    glVertex3f(x0+x1*ii + i * x1 * 1.f/count,
-                               0.0,
-                               z0+z1*jj + (j + 1) * z1 * -1.f/count);
-                }
-    glEnd();
-    
-    //        if( m_FloorTexture.TextureID ) glDisable(GL_TEXTURE_2D);
-    glEndList();
-}
 
 
 // Sets timer for refresh the display
@@ -240,9 +209,20 @@ void KeyOperations() {
         car->yaw(CAR_ROTATE::LEFT);
     }
     if (buffer['d']) {
-        printf("right rotate\n");
+        printf("left rotate\n");
         car->yaw(CAR_ROTATE::RIGHT);
     }
+
+    if (buffer['r']) {
+        printf("right rotate\n");
+        car->pitch(CAR_ROTATE::UP);
+    }
+    
+    if (buffer['f']) {
+        printf("right rotate\n");
+        car->pitch(CAR_ROTATE::DOWN);
+    }
+
 }
 
 
