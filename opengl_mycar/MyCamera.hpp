@@ -36,6 +36,8 @@ public:
     
     CAMERA_MODE mode;
     
+    float zoom;
+    
     float camera_y;
     float camera_x;
     float camera_z;

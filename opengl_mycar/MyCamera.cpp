@@ -13,6 +13,7 @@ MyCamera::MyCamera(void)
 {    
     //set(0,0,0,1,0,0,0,1,0); //Default
     set(10.0f, 5.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);  //sjnam default
+    zoom = 1;
 }
 
 MyCamera::~MyCamera(void)
@@ -60,5 +61,5 @@ void MyCamera::setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec, floa
 }
 
 void MyCamera::viewDefault() {
-    gluLookAt (2000, 2000.0f, 2000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+    gluLookAt (2000*zoom, 2000.0f*zoom, 2000.0f*zoom, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
 }

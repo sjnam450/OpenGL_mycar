@@ -248,6 +248,14 @@ void KeyOperations() {
 
 void keyboard(unsigned char key, int x, int y) {
     buffer[key] = true;
+    
+    if (key=='n') {
+        myCamera->zoom += 0.01;
+    }
+    if (key=='m') {
+        myCamera->zoom -= 0.01;
+    }
+
 }
 
 void keyboardUp(unsigned char key, int x, int y )
