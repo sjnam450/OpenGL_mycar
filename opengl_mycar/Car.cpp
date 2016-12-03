@@ -9,6 +9,7 @@
 #include "Car.hpp"
 
 
+GLuint tex[3];
 
 Car::Car() {
     currentPosition =  Vector3(0, 0, 0);
@@ -21,9 +22,37 @@ Car::Car() {
     objData = new objLoader();
     objData->load("Police_car.obj");
     
+    
     printf("Number of vertices: %i\n", objData->vertexCount);
     printf("Number of vertex normals: %i\n", objData->normalCount);
     printf("Number of texture coordinates: %i\n", objData->textureCount);
+    
+    
+    
+    
+    int matcount = objData->materialCount;
+    TGAFILE tgaFiles[matcount];
+    for (int i=0; i<objData->materialCount; i++) {
+        TGAFILE tgaFile;
+        texLoad.LoadTGAFile(objData->materialList[i]->texture_filename, &tgaFile);
+        //tex[i] = i;
+        memcpy(&tgaFiles[i], &tgaFile, sizeof(TGAFILE));
+    }
+    
+    //glBindTexture(GL_TEXTURE_2D,0);
+    //glBindTexture( GL_TEXTURE_2D, 0);
+    glGenTextures( 3, tex); //Create a Texture via ID
+    for (int i=0; i<objData->materialCount; i++) {
+        //glGenTextures( 0, &tex[i]); //Create a Texture via ID
+        //glGenTextures( 1, &tex[i]); //Create a Texture via ID
+        glBindTexture( GL_TEXTURE_2D, tex[i]);
+        //GL_BGRA_EXT
+        //GL_RG2
+        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, tgaFiles[i].imageWidth, tgaFiles[i].imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, tgaFiles[i].imageData );
+        
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    }
     
 }
 
@@ -66,61 +95,90 @@ void Car::yaw(CAR_ROTATE rotate)
 void Car::init_car() {
 
     int count=0;
+    //TGAFILE tgaFile1, tgaFile2, tgaFile3;
+    //            objData->materialList[objData->faceList[i]->material_index]->texture_filename;
+    
+
+
     
     car_opengl=glGenLists(1);
     glNewList(car_opengl, GL_COMPILE);
     {
         glShadeModel(GL_SMOOTH);
-        glBegin(GL_TRIANGLES);
-        
-        
-        //glBindTexture(<#GLenum target#>, <#GLuint texture#>)
 //        objData->materialList
 //        glMaterialfv(GL_FRONT, GL_AMBIENT, mtlList.at(objList.at(objLoop).material).ambient);
 //        glMaterialfv(GL_FRONT, GL_DIFFUSE, mtlList.at(objList.at(objLoop).material).diffuse);
 //        glMaterialfv(GL_FRONT, GL_SPECULAR, mtlList.at(objList.at(objLoop).material).specular);
 //        glMaterialf(GL_FRONT, GL_SHININESS, mtlList.at(objList.at(objLoop).material).shinyness);
         
+        
+        
         for (int i=0; i<objData->faceCount; i++) {
             //objData->faceList[i]->
             count++;
-//            GLfloat x = (GLfloat)objData->vertexList[i]->e[0];
-//            GLfloat y = (GLfloat)objData->vertexList[i]->e[1];
-//            GLfloat z = (GLfloat)objData->vertexList[i]->e[2];
-//            
-//            //TODO :: TEXTURE MAPPING
-//            
-//            glVertex3f(x,y,z);
+            //objData->materialList[objData->faceList[i]->material_index]-> ;
+            int texIndex0 = (GLuint)objData->faceList[i]->material_index+1;
             
-//            GLfloat xn = (GLfloat)objData->normalList[i]->e[0];
-//            GLfloat yn = (GLfloat)objData->normalList[i]->e[1];
-//            GLfloat zn = (GLfloat)objData->normalList[i]->e[2];
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture( GL_TEXTURE_2D, (GLuint)texIndex0 );
             
-            printf("mat inde %d\n", objData->faceList[i]->material_index == 0);
+            glBegin(GL_TRIANGLES);
+            printf("mat inde %d\n", objData->faceList[i]->material_index);
+//            objData->materialList[objData->faceList[i]->material_index]->texture_filename;
+//            objData->materialList[objData->faceList[i]->material_index]->amb;
+//            objData->materialList[objData->faceList[i]->material_index]->diff;
+//            objData->materialList[objData->faceList[i]->material_index]->texture_filename;
             
             //objData->faceList
             //glver
             int vertexinde0 =  objData->faceList[i]->vertex_index[0];
             int vertexinde1 =  objData->faceList[i]->vertex_index[1];
             int vertexinde2 =  objData->faceList[i]->vertex_index[2];
-            int vertexinde3 =  objData->faceList[i]->vertex_index[3];
-//            printf("vi : %d, %d, %d, %d\n", vertexinde0, vertexinde1, vertexinde2, vertexinde3);
             
+            
+            //int vertexinde3 =  objData->faceList[i]->vertex_index[3];
+            
+            //int texIndex0 = (GLuint)objData->faceList[i]->material_index+1;
+            //glBindTexture( GL_TEXTURE_2D, (GLuint)texIndex0 );
+            //glBindTexture( GL_TEXTURE_2D, 1 );
+            
+            GLfloat u1 = (GLfloat)objData->textureList[vertexinde0]->e[0];
+            GLfloat v1 = (GLfloat)objData->textureList[vertexinde0]->e[1];
+            glTexCoord2f(u1, v1);
             glVertex3f((GLfloat)objData->vertexList[vertexinde0]->e[0], (GLfloat)objData->vertexList[vertexinde0]->e[1], (GLfloat)objData->vertexList[vertexinde0]->e[2]);
-
-            glVertex3f((GLfloat)objData->vertexList[vertexinde1]->e[0], (GLfloat)objData->vertexList[vertexinde1]->e[1], (GLfloat)objData->vertexList[vertexinde1]->e[2]);
-
-            glVertex3f((GLfloat)objData->vertexList[vertexinde2]->e[0], (GLfloat)objData->vertexList[vertexinde2]->e[1], (GLfloat)objData->vertexList[vertexinde2]->e[2]);
-            
             glNormal3f((GLfloat)objData->normalList[vertexinde0]->e[0], (GLfloat)objData->normalList[vertexinde0]->e[1], (GLfloat)objData->normalList[vertexinde0]->e[2]);
-
+            
+            printf("uv %f, %f, texture in : %d\n", u1, v1, texIndex0);
+            
+            
+            int texIndex1 = (GLuint)objData->faceList[i]->material_index +1;
+            //glBindTexture( GL_TEXTURE_2D, (GLuint)texIndex1 );
+            GLfloat u2 = (GLfloat)objData->textureList[vertexinde1]->e[0];
+            GLfloat v2 = (GLfloat)objData->textureList[vertexinde1]->e[1];
+            glTexCoord2f(u2, v2);
+            glVertex3f((GLfloat)objData->vertexList[vertexinde1]->e[0], (GLfloat)objData->vertexList[vertexinde1]->e[1], (GLfloat)objData->vertexList[vertexinde1]->e[2]);
             glNormal3f((GLfloat)objData->normalList[vertexinde1]->e[0], (GLfloat)objData->normalList[vertexinde1]->e[1], (GLfloat)objData->normalList[vertexinde0]->e[2]);
+            
 
+            
+            int texIndex2 = (GLuint)objData->faceList[i]->material_index +1;
+            //glBindTexture( GL_TEXTURE_2D, (GLuint)texIndex2 );
+            GLfloat u3 = (GLfloat)objData->textureList[vertexinde2]->e[0];
+            GLfloat v3 = (GLfloat)objData->textureList[vertexinde2]->e[1];
+            glTexCoord2f(u3, v3);
+            glVertex3f((GLfloat)objData->vertexList[vertexinde2]->e[0], (GLfloat)objData->vertexList[vertexinde2]->e[1], (GLfloat)objData->vertexList[vertexinde2]->e[2]);
             glNormal3f((GLfloat)objData->normalList[vertexinde2]->e[0], (GLfloat)objData->normalList[vertexinde2]->e[1], (GLfloat)objData->normalList[vertexinde2]->e[2]);
+        
+            glEnd();
         }
         
-        //printf("vertex cound : %d\n", count);
-        glEnd();
+        glDisable(GL_TEXTURE_2D);
+        
+
+        
+        printf("vertex cound : %d\n", count);
+        
+        
     }
     glEndList();
     
@@ -142,12 +200,12 @@ void Car::draw_car() {
     glPushMatrix();
 
     GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};    
-    glEnable(GL_COLOR_MATERIAL);
+    //glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_SMOOTH);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMateriali(GL_FRONT, GL_SHININESS, 10);
+//    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+//    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
+//    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+//    glMateriali(GL_FRONT, GL_SHININESS, 10);
     
     //glColor3f(0.2,0.4,0.1);
     glTranslatef(currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);

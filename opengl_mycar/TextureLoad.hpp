@@ -10,5 +10,24 @@
 #define TextureLoad_hpp
 
 #include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct
+{
+    unsigned char imageTypeCode;
+    short int imageWidth;
+    short int imageHeight;
+    unsigned char bitCount;
+    unsigned char *imageData;
+} TGAFILE;
+
+
+class TextureLoad {
+    
+public:
+    bool LoadTGAFile(char *filename, TGAFILE *tgaFile);
+    
+};
 
 #endif /* TextureLoad_hpp */

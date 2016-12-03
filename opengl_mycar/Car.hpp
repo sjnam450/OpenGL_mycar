@@ -16,7 +16,7 @@
 
 #include "Vector3.h"
 #include "objLoader.h"
-
+#include "TextureLoad.hpp"
 
 
 //const GLfloat WhiteColor4[]  = { 1.0, 1.0, 1.0, 1.0 };
@@ -57,6 +57,7 @@ public:
     objLoader *objData;
     GLuint car_opengl;
     float speed;
+    TextureLoad texLoad;
     
 private:
     void rotateMatUtil(Vector3 &retVec, float angle);
