@@ -18,6 +18,9 @@
 		C796EBA31DE8013B00FAD14E /* obj_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA11DE8013B00FAD14E /* obj_parser.cpp */; };
 		C796EBA61DE8015C00FAD14E /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA41DE8015C00FAD14E /* list.cpp */; };
 		C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C796EBA71DE8017500FAD14E /* string_extra.cpp */; };
+		C7B8807E1DF065A800EDC283 /* MyCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B8807C1DF065A800EDC283 /* MyCamera.cpp */; };
+		C7B880811DF17C9E00EDC283 /* Track.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B8807F1DF17C9E00EDC283 /* Track.cpp */; };
+		C7B880851DF2E66500EDC283 /* TextureLoad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B880831DF2E66500EDC283 /* TextureLoad.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,6 +64,12 @@
 		C796EBA51DE8015C00FAD14E /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		C796EBA71DE8017500FAD14E /* string_extra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = string_extra.cpp; sourceTree = "<group>"; };
 		C796EBA81DE8017500FAD14E /* string_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_extra.h; sourceTree = "<group>"; };
+		C7B8807C1DF065A800EDC283 /* MyCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyCamera.cpp; sourceTree = "<group>"; };
+		C7B8807D1DF065A800EDC283 /* MyCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MyCamera.hpp; sourceTree = "<group>"; };
+		C7B8807F1DF17C9E00EDC283 /* Track.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Track.cpp; sourceTree = "<group>"; };
+		C7B880801DF17C9E00EDC283 /* Track.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Track.hpp; sourceTree = "<group>"; };
+		C7B880831DF2E66500EDC283 /* TextureLoad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureLoad.cpp; sourceTree = "<group>"; };
+		C7B880841DF2E66500EDC283 /* TextureLoad.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TextureLoad.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +88,7 @@
 		C7806AED1DDCB2DF0019DE30 = {
 			isa = PBXGroup;
 			children = (
+				C7B880821DF186B600EDC283 /* New Group */,
 				C7806AF81DDCB2DF0019DE30 /* opengl_mycar */,
 				C7806AF71DDCB2DF0019DE30 /* Products */,
 				C7806B131DDCB68A0019DE30 /* Frameworks */,
@@ -121,6 +131,12 @@
 				C7806AF91DDCB2DF0019DE30 /* main.cpp */,
 				C70A6FE51DE5763E0011282D /* Car.cpp */,
 				C70A6FE61DE5763E0011282D /* Car.hpp */,
+				C7B880831DF2E66500EDC283 /* TextureLoad.cpp */,
+				C7B880841DF2E66500EDC283 /* TextureLoad.hpp */,
+				C7B8807F1DF17C9E00EDC283 /* Track.cpp */,
+				C7B880801DF17C9E00EDC283 /* Track.hpp */,
+				C7B8807C1DF065A800EDC283 /* MyCamera.cpp */,
+				C7B8807D1DF065A800EDC283 /* MyCamera.hpp */,
 			);
 			path = opengl_mycar;
 			sourceTree = "<group>";
@@ -132,6 +148,13 @@
 				C7806B141DDCB68A0019DE30 /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7B880821DF186B600EDC283 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,13 +215,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C70A6FE71DE5763E0011282D /* Car.cpp in Sources */,
+				C7B880851DF2E66500EDC283 /* TextureLoad.cpp in Sources */,
 				C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */,
 				C796EBA61DE8015C00FAD14E /* list.cpp in Sources */,
 				C72F9EF81DEF20060030FECD /* main.cpp in Sources */,
 				C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */,
 				C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */,
+				C7B8807E1DF065A800EDC283 /* MyCamera.cpp in Sources */,
 				C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */,
 				C796EBA01DE8006F00FAD14E /* objLoader.cpp in Sources */,
+				C7B880811DF17C9E00EDC283 /* Track.cpp in Sources */,
 				C796EBA31DE8013B00FAD14E /* obj_parser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
