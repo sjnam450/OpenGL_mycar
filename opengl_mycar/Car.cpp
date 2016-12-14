@@ -258,6 +258,7 @@ void Car::SetMaterial2(GLfloat spec[], GLfloat amb[], GLfloat diff[], GLfloat sh
 void Car::draw_car() {
     
     glPushMatrix();
+    
 
     GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};    
     //glEnable(GL_COLOR_MATERIAL);

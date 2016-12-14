@@ -30,9 +30,10 @@ Skybox::Skybox() {
     }
     
     for (int i = 0; i < skymapCount; i++) {
-        unsigned char* imgData;
         FILE *filePtr;
-        filePtr = fopen("Daylight Box_Top.bmp", "rb");
+        const char * str = skyboxFiles[i].c_str();
+        printf("file name : %s", str);
+        filePtr = fopen(str, "rb");
         if (filePtr == NULL)
         {
             printf("error\n");
@@ -48,9 +49,8 @@ Skybox::Skybox() {
         fread(&planes, 2, 1, filePtr);
         fseek(filePtr, 24, SEEK_CUR);
         int imageSize = 512*512 * 3;
-        imgData = (unsigned char*)malloc(sizeof(unsigned char)*imageSize);
-        fread(imgData, sizeof(unsigned char), imageSize, filePtr);
-        memcpy(&imgDatas[i], &imgData, sizeof(imageSize));
+        fread(imgDatas[i], sizeof(unsigned char), imageSize, filePtr);
+        //memcpy(&imgDatas[i], &imgData, sizeof(imageSize));
         fclose(filePtr);
         
     }
@@ -60,6 +60,8 @@ Skybox::Skybox() {
     
     //glBindTexture(GL_TEXTURE_2D,0);
     //glBindTexture( GL_TEXTURE_2D, 0);
+    glBegin(GL_TEXTURE);
+    glPushMatrix();
     glGenTextures( 6, skytex); //Create a Texture via ID
     for (int i=0; i<skymapCount; i++) {
         glBindTexture( GL_TEXTURE_2D, skytex[i]);
@@ -67,6 +69,9 @@ Skybox::Skybox() {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, &imgDatas[i]);
     }
+    glPopMatrix();
+    
+    glEnd();
 
     
 }
@@ -100,7 +105,7 @@ void Skybox::draw() {
     //glPushAttrib(GL_TEXTURE_BIT);
       glEnable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
-    glBindTexture(GL_TEXTURE_2D, skytex[i]);
+    glBindTexture(GL_TEXTURE_2D, skytex[5]);
 //    glColor3f(0.9, 0.3, 0.4);
     glTexCoord2f(0.0, 0.0); glVertex3f(0, +500.0, -500.0);
     
