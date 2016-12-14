@@ -14,67 +14,58 @@
 
 GLuint skytex[6];
 
+unsigned char* *imgDatas;
+
 Skybox::Skybox() {
     
     //load texture
     
-    std::vector<std::string> skyboxFiles = {"Daylight_Box_Back.bmp", "Daylight Box_Bottom.bmp", "Daylight Box_Front.bmp", "Daylight Box_Left.bmp", "Daylight Box_Right.bmp", "Daylight Box_Top.bmp"};
-
-    unsigned char* imgData;
-    FILE *filePtr;
-    filePtr = fopen("Daylight Box_Top.bmp", "rb");
-    if (filePtr == NULL)
-    {
-        printf("error\n");
-    }
-    //fseek(filePtr, 54, SEEK_CUR);
-//    file = fopen(filePtr, "rb");
-    int SizeX, SizeY, size;
-    short int bpp;
-    short int planes;
-    fseek(filePtr, 18, SEEK_CUR);
-    fread(&SizeX, 4, 1, filePtr);
-    fread(&SizeY, 4, 1, filePtr);
-    size = SizeX * SizeY * 3;
-    fread(&bpp, 2, 1, filePtr);
-    fread(&planes, 2, 1, filePtr);
-    fseek(filePtr, 24, SEEK_CUR);
-
+    std::vector<std::string> skyboxFiles = {"Daylight Box_Back.bmp", "Daylight Box_Bottom.bmp", "Daylight Box_Front.bmp", "Daylight Box_Left.bmp", "Daylight Box_Right.bmp", "Daylight Box_Top.bmp"};
     
     int skymapCount = 6; //정육면체
-//    TGAFILE tgaFiles[skymapCount];
-//    for (int i=0; i<skymapCount; i++) {
-//        TGAFILE tgaFile;
-//        texLoad.LoadTGAFile((char *)skyboxFiles[i].c_str(), &tgaFile);
-//        //tex[i] = i;
-//        printf("tga file name : %s\n", (char *)skyboxFiles[i].c_str());
-//        memcpy(&tgaFiles[i], &tgaFile, sizeof(TGAFILE));
-//    }
-    
     int imageSize = 512*512 * 3;
-    imgData = (unsigned char*)malloc(sizeof(unsigned char)*imageSize);
+    imgDatas = (unsigned char**)malloc(sizeof(unsigned char*)*6);
+    for (int i =0; i<skymapCount; i++) {
+        imgDatas[i] = (unsigned char*)malloc(sizeof(unsigned char)*imageSize);
+    }
     
+    for (int i = 0; i < skymapCount; i++) {
+        unsigned char* imgData;
+        FILE *filePtr;
+        filePtr = fopen("Daylight Box_Top.bmp", "rb");
+        if (filePtr == NULL)
+        {
+            printf("error\n");
+        }
+        int SizeX, SizeY, size;
+        short int bpp;
+        short int planes;
+        fseek(filePtr, 18, SEEK_CUR);
+        fread(&SizeX, 4, 1, filePtr);
+        fread(&SizeY, 4, 1, filePtr);
+        size = SizeX * SizeY * 3;
+        fread(&bpp, 2, 1, filePtr);
+        fread(&planes, 2, 1, filePtr);
+        fseek(filePtr, 24, SEEK_CUR);
+        int imageSize = 512*512 * 3;
+        imgData = (unsigned char*)malloc(sizeof(unsigned char)*imageSize);
+        fread(imgData, sizeof(unsigned char), imageSize, filePtr);
+        memcpy(&imgDatas[i], &imgData, sizeof(imageSize));
+        fclose(filePtr);
+        
+    }
 
-    // Read the image data.
-    fread(imgData, sizeof(unsigned char), imageSize, filePtr);
 
-    fclose(filePtr);
+    
     
     //glBindTexture(GL_TEXTURE_2D,0);
     //glBindTexture( GL_TEXTURE_2D, 0);
     glGenTextures( 6, skytex); //Create a Texture via ID
     for (int i=0; i<skymapCount; i++) {
-        //glGenTextures( 0, &tex[i]); //Create a Texture via ID
-        //glGenTextures( 1, &tex[i]); //Create a Texture via ID
         glBindTexture( GL_TEXTURE_2D, skytex[i]);
-        //GL_BGRA_EXT
-        //GL_RG2
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-        
-        
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, imgData );
-        
+        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, &imgDatas[i]);
     }
 
     
@@ -106,10 +97,10 @@ void Skybox::draw() {
 //    }
     
     glPushMatrix();
-
+    //glPushAttrib(GL_TEXTURE_BIT);
       glEnable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
-    glBindTexture(GL_TEXTURE_2D, 9);
+    glBindTexture(GL_TEXTURE_2D, skytex[i]);
 //    glColor3f(0.9, 0.3, 0.4);
     glTexCoord2f(0.0, 0.0); glVertex3f(0, +500.0, -500.0);
     
@@ -120,6 +111,7 @@ void Skybox::draw() {
     glTexCoord2f(1.0, 0.0); glVertex3f(0, -500.0, -500.0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
+    //glPopAttrib();
     glPopMatrix();
     
 

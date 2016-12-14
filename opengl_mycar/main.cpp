@@ -180,16 +180,18 @@ void display() {
     track->draw_track(700, 600);
 
     //4.sky
-    skybox->draw();
+//    skybox->draw();
 
     
     //3. draw_car();
     car->draw_car();
     
+        skybox->draw();
+    
     //4. draw tree
 
     //tree->draw(); //so slow uu
-    for (int i=0; i<200; i++) {
+    for (int i=0; i<400; i++) {
         treeVector[i].draw();
     }
     
@@ -294,7 +296,7 @@ int main(int argc,  char ** argv) {
     skybox = new Skybox();
     
     //4.3 tree
-    treeVector.reserve(200);
+    treeVector.reserve(400);
     
     //나무 위치 잡기
     for (int i; i<200; i++) {
@@ -302,6 +304,14 @@ int main(int argc,  char ** argv) {
         tree->setPos(300 * 0.5*i, -80, -200);
         treeVector.push_back(*tree);
     }
+    
+    for (int i=0; i<200; i++) {
+        Tree *tree = new Tree();
+        tree->setPos(300 * 0.5*i, -80, +200);
+        treeVector.push_back(*tree);
+    }
+
+    
     
     
     // 5. light system init
