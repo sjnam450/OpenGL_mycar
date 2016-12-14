@@ -10,5 +10,15 @@
 #define Tree_hpp
 
 #include <stdio.h>
+#include "objLoader.h"
+
+class Tree {
+    
+    objLoader *objData;
+    
+public:
+    Tree();
+    void draw();
+};
 
 #endif /* Tree_hpp */

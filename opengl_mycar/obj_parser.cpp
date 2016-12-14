@@ -164,7 +164,17 @@ obj_vector* obj_parse_vector()
 	obj_vector *v = (obj_vector*)malloc(sizeof(obj_vector));
 	v->e[0] = atof( strtok(NULL, WHITESPACE));
 	v->e[1] = atof( strtok(NULL, WHITESPACE));
-	v->e[2] = atof( strtok(NULL, WHITESPACE));
+    
+    char *ptr;
+    if (ptr = strtok(NULL, WHITESPACE) ) {
+            double temp = atof( ptr);
+        v->e[2] = temp;
+    }
+    else {
+        v->e[2] = 0.0f;
+    }
+
+    
 	return v;
 }
 

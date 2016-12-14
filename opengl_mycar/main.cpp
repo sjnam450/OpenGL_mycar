@@ -14,6 +14,7 @@
 #include "MyCamera.hpp"
 #include "Track.hpp"
 #include "Skybox.hpp"
+#include "Tree.hpp"
 
 
 #define WINDOW_WIDTH    800
@@ -49,6 +50,7 @@ Car *car;
 MyCamera *myCamera;
 Track *track;
 Skybox *skybox;
+Tree *tree;
 
 bool buffer[256]; //keyboard
 
@@ -179,6 +181,9 @@ void display() {
     //3. draw_car();
     car->draw_car();
     
+    //4. draw tree
+    tree->draw(); //so slow uu
+    
     
     //	4. swap buffers
     glutSwapBuffers ();
@@ -279,7 +284,8 @@ int main(int argc,  char ** argv) {
     // 4.2 skymap
     skybox = new Skybox();
     
-    
+    //4.3 tree
+    tree = new Tree();
     
     
     // 5. light system init
