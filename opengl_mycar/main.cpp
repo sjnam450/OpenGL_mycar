@@ -13,6 +13,7 @@
 #include "Car.hpp"
 #include "MyCamera.hpp"
 #include "Track.hpp"
+#include "Skybox.hpp"
 
 
 #define WINDOW_WIDTH    800
@@ -47,6 +48,7 @@ float colors[9][3] = {{0, 0, 0},		//	White
 Car *car;
 MyCamera *myCamera;
 Track *track;
+Skybox *skybox;
 
 bool buffer[256]; //keyboard
 
@@ -169,11 +171,14 @@ void display() {
     
     //	2. draw track
     track->draw_track(700, 600);
+
+    //4.sky
+    skybox->draw();
+
     
     //3. draw_car();
     car->draw_car();
     
-    //4.hud
     
     //	4. swap buffers
     glutSwapBuffers ();
@@ -270,6 +275,9 @@ int main(int argc,  char ** argv) {
     
     // 4.1 track
     track = new Track();
+    
+    // 4.2 skymap
+    skybox = new Skybox();
     
     
     
