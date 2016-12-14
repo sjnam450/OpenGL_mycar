@@ -16,6 +16,14 @@ GLuint skytex[6];
 
 unsigned char* *imgDatas;
 
+GLenum  cube[6] = { GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+    GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+    GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+    GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+    GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
+    GL_TEXTURE_CUBE_MAP_POSITIVE_Y
+    };
+
 Skybox::Skybox() {
     
     //load texture
@@ -68,6 +76,13 @@ Skybox::Skybox() {
         glBindTexture( GL_TEXTURE_2D, skytex[i]);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+        
+//        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+        
         glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_BGR, GL_UNSIGNED_BYTE, imgDatas[i]);
     }
 
@@ -82,9 +97,11 @@ void Skybox::draw() {
     float x=0,y=0/2,z=0;
     int   i,j,vi;
     
+    float mapSize = 2000.0f;
+    
     float sb_vertices[8][3] = {
-        {-500,500,500},{-500,500,-500},{-500,-500,500},{-500,-500,-500},{500,500,500},
-        {500,500,-500},{500,-500,500},{500,-500,-500}};
+        {-mapSize, mapSize-200 ,mapSize}, {-mapSize,mapSize-200 ,-mapSize}, {-mapSize,-mapSize-200, mapSize},{-mapSize, -mapSize-200, -mapSize},{mapSize,mapSize-200, mapSize},
+        {mapSize, mapSize-200, -mapSize},{mapSize,-mapSize-200, mapSize},{mapSize,-mapSize-200,-mapSize}};
     
     int sb_texcoords[4][2] = {{0,1},{1,1},{1,0},{0,0}};
     int sb_faces[6][4] = {{1,0,2,3},{3, 2, 6, 7}, {5, 4, 6, 7},
