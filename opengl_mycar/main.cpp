@@ -16,6 +16,8 @@
 #include "Skybox.hpp"
 #include "Tree.hpp"
 
+#include <vector>
+
 
 #define WINDOW_WIDTH    800
 #define WINDOW_HEIGHT   600
@@ -50,7 +52,10 @@ Car *car;
 MyCamera *myCamera;
 Track *track;
 Skybox *skybox;
-Tree *tree;
+//Tree *tree;
+std::vector<Tree> treeVector;
+
+
 
 bool buffer[256]; //keyboard
 
@@ -182,7 +187,11 @@ void display() {
     car->draw_car();
     
     //4. draw tree
-    tree->draw(); //so slow uu
+
+    //tree->draw(); //so slow uu
+    for (int i=0; i<200; i++) {
+        treeVector[i].draw();
+    }
     
     
     //	4. swap buffers
@@ -285,7 +294,14 @@ int main(int argc,  char ** argv) {
     skybox = new Skybox();
     
     //4.3 tree
-    tree = new Tree();
+    treeVector.reserve(200);
+    
+    //나무 위치 잡기
+    for (int i; i<200; i++) {
+        Tree *tree = new Tree();
+        tree->setPos(300 * 0.5*i, -80, -200);
+        treeVector.push_back(*tree);
+    }
     
     
     // 5. light system init

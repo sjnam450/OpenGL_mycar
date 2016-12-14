@@ -50,6 +50,11 @@ Tree::Tree() {
 
     
 }
+
+void Tree::setPos(float x, float y, float z) {
+    curPos.set(x, y, z);
+}
+
 void Tree::draw() {
     
     int count=0;
@@ -57,7 +62,7 @@ void Tree::draw() {
 //        glLoadIdentity();                // Reset The Projection Matrix
     
     glPushMatrix();
-     glTranslatef(+500, -200, -300);
+     glTranslatef(curPos[0], curPos[1], curPos[2]);
             glScaled(0.5, 0.5, 0.5);
     for (int i=0; i<objData->faceCount; i++) {
         //objData->faceList[i]->

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "objLoader.h"
+#include "Vector3.h"
 
 class Tree {
     
@@ -19,6 +20,11 @@ class Tree {
 public:
     Tree();
     void draw();
+    void setPos(float x, float y, float z);
+    
+private:
+    Vector3 curPos;
+
 };
 
 #endif /* Tree_hpp */
