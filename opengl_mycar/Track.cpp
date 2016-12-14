@@ -18,14 +18,14 @@ void Track::draw_track(float R1,float R2) {
     int  y;
     Y = 0;
     glPushMatrix();
-    
-    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    
-    glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMateriali(GL_FRONT, GL_SHININESS, 10);
+//    
+//    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+//    
+//    glEnable(GL_COLOR_MATERIAL);
+//    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+//    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
+//    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+//    glMateriali(GL_FRONT, GL_SHININESS, 10);
     
     glColor3f(0.3,0.3,0.6);
     

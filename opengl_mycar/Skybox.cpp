@@ -31,6 +31,8 @@ Skybox::Skybox() {
     
     for (int i = 0; i < skymapCount; i++) {
         FILE *filePtr;
+        unsigned char * imgData;
+        imgData = (unsigned char*)malloc(sizeof(unsigned char)*imageSize);
         const char * str = skyboxFiles[i].c_str();
         printf("file name : %s", str);
         filePtr = fopen(str, "rb");
@@ -49,8 +51,8 @@ Skybox::Skybox() {
         fread(&planes, 2, 1, filePtr);
         fseek(filePtr, 24, SEEK_CUR);
         int imageSize = 512*512 * 3;
-        fread(imgDatas[i], sizeof(unsigned char), imageSize, filePtr);
-        //memcpy(&imgDatas[i], &imgData, sizeof(imageSize));
+        fread(imgData, sizeof(unsigned char), imageSize, filePtr);
+        memcpy(imgDatas[i], imgData, sizeof(unsigned char)*imageSize);
         fclose(filePtr);
         
     }
@@ -60,18 +62,16 @@ Skybox::Skybox() {
     
     //glBindTexture(GL_TEXTURE_2D,0);
     //glBindTexture( GL_TEXTURE_2D, 0);
-    glBegin(GL_TEXTURE);
-    glPushMatrix();
+
     glGenTextures( 6, skytex); //Create a Texture via ID
     for (int i=0; i<skymapCount; i++) {
         glBindTexture( GL_TEXTURE_2D, skytex[i]);
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_RGB, GL_UNSIGNED_BYTE, &imgDatas[i]);
+        glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_BGR, GL_UNSIGNED_BYTE, imgDatas[i]);
     }
-    glPopMatrix();
+
     
-    glEnd();
 
     
 }
@@ -83,12 +83,12 @@ void Skybox::draw() {
     int   i,j,vi;
     
     float sb_vertices[8][3] = {
-        {500,500,-500},{500,500,+500},{500,-500,-500},{500,-500,+500},{-500,500,+500},
-        {-500,500,-500},{-500,-500,+500},{-500,-500,-500}};
+        {-500,500,500},{-500,500,-500},{-500,-500,500},{-500,-500,-500},{500,500,500},
+        {500,500,-500},{500,-500,500},{500,-500,-500}};
     
-    int sb_texcoords[4][2] = {{1,1},{1,0},{0,0},{0,1}};
-    int sb_faces[6][4] = {{3,2,1,0},{4,6,7,5},{0,4,5,3},
-        {6,1,2,7},{0,1,6,4},{5,7,2,3}};
+    int sb_texcoords[4][2] = {{0,1},{1,1},{1,0},{0,0}};
+    int sb_faces[6][4] = {{1,0,2,3},{3, 2, 6, 7}, {5, 4, 6, 7},
+        {4, 0, 2, 6},{1, 5, 7, 3}, {1, 0, 4, 5}};
 //    for(i=0;i<6;i++){
 //        glBindTexture(GL_TEXTURE_2D, skytex[0]);
 //        glBegin (GL_QUADS);
@@ -103,21 +103,33 @@ void Skybox::draw() {
     
     glPushMatrix();
     //glPushAttrib(GL_TEXTURE_BIT);
-      glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
+    
+    for(i=0;i<6;i++){
+    glBindTexture(GL_TEXTURE_2D, skytex[i]);
     glBegin(GL_QUADS);
-    glBindTexture(GL_TEXTURE_2D, skytex[5]);
+
 //    glColor3f(0.9, 0.3, 0.4);
-    glTexCoord2f(0.0, 0.0); glVertex3f(0, +500.0, -500.0);
+
+        
+        for (int j=0; j< 4; j++) {
+            int vertexCount = sb_faces[i][j];
+            float x = sb_vertices[vertexCount][0];
+            float y = sb_vertices[vertexCount][1];
+            float z = sb_vertices[vertexCount][2];
+            
+            glTexCoord2f(sb_texcoords[j][0], sb_texcoords[j][1]); glVertex3f(x, y, z);
+        }
+        
+        glEnd();
+
+        
     
-    glTexCoord2f(0.0, 1.0); glVertex3f(0.0, 500.0, +500.0);
     
-    glTexCoord2f(1.0, 1.0); glVertex3f(0.0, -500.0, 500.0);
-    
-    glTexCoord2f(1.0, 0.0); glVertex3f(0, -500.0, -500.0);
-    glEnd();
+    }
     glDisable(GL_TEXTURE_2D);
-    //glPopAttrib();
     glPopMatrix();
+    
     
 
 }

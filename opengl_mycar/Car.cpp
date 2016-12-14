@@ -258,22 +258,13 @@ void Car::SetMaterial2(GLfloat spec[], GLfloat amb[], GLfloat diff[], GLfloat sh
 void Car::draw_car() {
     
     glPushMatrix();
-    
-
-    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};    
-    //glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_SMOOTH);
-//    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
-//    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
-//    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-//    glMateriali(GL_FRONT, GL_SHININESS, 10);
     
     //glColor3f(0.2,0.4,0.1);
     glTranslatef(currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
     glRotatef(270, 0.0, 1.0 ,0.0);
     
     //this point
-    //glRotatef(directionalVector.angleSigned(Vector3(1,0,0))*_180_OVER_PI, 0.0, 1.0 ,0.0);
     glRotatef(degree, 0.0, 1.0 ,0.0);
     glRotatef(pitch_degree, 0.0, 0.0 ,1.0);
 

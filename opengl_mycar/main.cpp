@@ -74,8 +74,8 @@ void init() {
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glEnable( GL_LIGHTING ); //조명을 사용할 것이다.
-    glEnable( GL_LIGHT0 ); //조명 중 0 번 조명을 사용할 것이다.
+//    glEnable( GL_LIGHTING ); //조명을 사용할 것이다.
+//    glEnable( GL_LIGHT0 ); //조명 중 0 번 조명을 사용할 것이다.
     
     GLfloat AmbientLightValue[] = { 0.3f, 0.3f, 0.3f, 1.0f };
     GLfloat DiffuseLightValue[] = { 0.7f, 0.7f, 0.7f, 1.0f };
@@ -85,10 +85,10 @@ void init() {
     
     
     
-    glLightfv( GL_LIGHT0, GL_AMBIENT, AmbientLightValue ); //Ambient 조명의 성질을 설정한다.
-    glLightfv( GL_LIGHT0, GL_DIFFUSE, DiffuseLightValue ); //Diffuse 조명의 성질을 설정한다.
-    glLightfv( GL_LIGHT0, GL_SPECULAR, SpecularLightValue ); //Specular 조명의 성질을 설정한다.
-    glLightfv( GL_LIGHT0, GL_POSITION, PositionLightValue ); //조명의 위치(광원)를 설정한다.
+//    glLightfv( GL_LIGHT0, GL_AMBIENT, AmbientLightValue ); //Ambient 조명의 성질을 설정한다.
+//    glLightfv( GL_LIGHT0, GL_DIFFUSE, DiffuseLightValue ); //Diffuse 조명의 성질을 설정한다.
+//    glLightfv( GL_LIGHT0, GL_SPECULAR, SpecularLightValue ); //Specular 조명의 성질을 설정한다.
+//    glLightfv( GL_LIGHT0, GL_POSITION, PositionLightValue ); //조명의 위치(광원)를 설정한다.
     
     glCullFace ( GL_BACK );
     myCamera->mode = WORLD;
@@ -123,24 +123,30 @@ void Timer_sj(int extra)
 
 void draw_axis2 ( )
 {
+    glPushMatrix();
     glLineWidth ( 2.0f );
-    glBegin(GL_LINE_LOOP);
     glColor3f(1,0,0); //red x
+    glBegin(GL_LINE_LOOP);
     glVertex3f(-2000,0,0);
     glVertex3f(2000,0,0);
     glEnd();
+    glPopMatrix();
     
+    glPushMatrix();
     glBegin(GL_LINE_LOOP);
     glColor3f(0,1,0); //green y
     glVertex3f(0,-2000,0);
     glVertex3f(0,2000,0);
     glEnd();
+    glPopMatrix();
     
+    glPushMatrix();
     glBegin(GL_LINE_LOOP);
     glColor3f(0,0,1); //blue z
     glVertex3f(0,0,-2000);
     glVertex3f(0,0,2000);
     glEnd();
+    glPopMatrix();
     
 }
 
@@ -162,8 +168,16 @@ void display() {
     //	1. clear buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
+    
     //glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
     draw_axis2 ( );
+    glPopAttrib();
+    glPopMatrix();
+    
+
+    
     glLoadIdentity();
     KeyOperations();
     
@@ -174,27 +188,51 @@ void display() {
     else if (myCamera->mode == WORLD) {
         myCamera->viewDefault();
     }
+    
+    
+//    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+//    
+//    glEnable(GL_COLOR_MATERIAL);
+//    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+//    glColor4f(0.75f, 0.75f, 0.75f, 1.0f);
+//    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+//    glMateriali(GL_FRONT, GL_SHININESS, 10);
+
 
     
     //	2. draw track
+    glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
     track->draw_track(700, 600);
+    glPopAttrib();
+    glPopMatrix();
 
     //4.sky
 //    skybox->draw();
 
     
-    //3. draw_car();
-    car->draw_car();
+
     
-        skybox->draw();
-    
+    glPushMatrix();
+    skybox->draw();
+    glPopMatrix();
     //4. draw tree
+    
+
 
     //tree->draw(); //so slow uu
+    glPushMatrix();
+    glPushAttrib(GL_CURRENT_BIT);
     for (int i=0; i<400; i++) {
         treeVector[i].draw();
     }
+    glPopAttrib();
+    glPopMatrix();
     
+    //3. draw_car();
+    glPushMatrix();
+    car->draw_car();
+    glPopMatrix();
     
     //	4. swap buffers
     glutSwapBuffers ();
