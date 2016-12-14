@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		C70A6FE71DE5763E0011282D /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C70A6FE51DE5763E0011282D /* Car.cpp */; };
 		C72F9EF81DEF20060030FECD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806AF91DDCB2DF0019DE30 /* main.cpp */; };
-		C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B021DDCB35C0019DE30 /* Camera.cpp */; };
-		C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B071DDCB35C0019DE30 /* Robot.cpp */; };
+		C76584811E0041FC00EEA9C0 /* Skybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C765847F1E0041FC00EEA9C0 /* Skybox.cpp */; };
 		C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7806B0C1DDCB35C0019DE30 /* Vector3.cpp */; };
 		C7806B151DDCB68A0019DE30 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7806B141DDCB68A0019DE30 /* OpenGL.framework */; };
 		C7806B171DDCB6900019DE30 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7806B161DDCB6900019DE30 /* GLUT.framework */; };
@@ -38,20 +37,10 @@
 /* Begin PBXFileReference section */
 		C70A6FE51DE5763E0011282D /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Car.cpp; sourceTree = "<group>"; };
 		C70A6FE61DE5763E0011282D /* Car.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Car.hpp; sourceTree = "<group>"; };
+		C765847F1E0041FC00EEA9C0 /* Skybox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Skybox.cpp; sourceTree = "<group>"; };
+		C76584801E0041FC00EEA9C0 /* Skybox.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Skybox.hpp; sourceTree = "<group>"; };
 		C7806AF61DDCB2DF0019DE30 /* opengl_mycar */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = opengl_mycar; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7806AF91DDCB2DF0019DE30 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		C7806B001DDCB35C0019DE30 /* barrel1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = barrel1.jpg; sourceTree = "<group>"; };
-		C7806B011DDCB35C0019DE30 /* barrel2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = barrel2.jpg; sourceTree = "<group>"; };
-		C7806B021DDCB35C0019DE30 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
-		C7806B031DDCB35C0019DE30 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
-		C7806B041DDCB35C0019DE30 /* crate1.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = crate1.tga; sourceTree = "<group>"; };
-		C7806B051DDCB35C0019DE30 /* gRobot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gRobot.cpp; sourceTree = "<group>"; };
-		C7806B061DDCB35C0019DE30 /* parquet1.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = parquet1.tga; sourceTree = "<group>"; };
-		C7806B071DDCB35C0019DE30 /* Robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Robot.cpp; sourceTree = "<group>"; };
-		C7806B081DDCB35C0019DE30 /* Robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Robot.h; sourceTree = "<group>"; };
-		C7806B091DDCB35C0019DE30 /* robot2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = robot2.jpg; sourceTree = "<group>"; };
-		C7806B0A1DDCB35C0019DE30 /* TextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureLoader.cpp; sourceTree = "<group>"; };
-		C7806B0B1DDCB35C0019DE30 /* TextureLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureLoader.h; sourceTree = "<group>"; };
 		C7806B0C1DDCB35C0019DE30 /* Vector3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector3.cpp; sourceTree = "<group>"; };
 		C7806B0D1DDCB35C0019DE30 /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
 		C7806B141DDCB68A0019DE30 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -114,18 +103,6 @@
 				C796EBA21DE8013B00FAD14E /* obj_parser.h */,
 				C796EB9E1DE8006F00FAD14E /* objLoader.cpp */,
 				C796EB9F1DE8006F00FAD14E /* objLoader.h */,
-				C7806B001DDCB35C0019DE30 /* barrel1.jpg */,
-				C7806B011DDCB35C0019DE30 /* barrel2.jpg */,
-				C7806B021DDCB35C0019DE30 /* Camera.cpp */,
-				C7806B031DDCB35C0019DE30 /* Camera.h */,
-				C7806B041DDCB35C0019DE30 /* crate1.tga */,
-				C7806B051DDCB35C0019DE30 /* gRobot.cpp */,
-				C7806B061DDCB35C0019DE30 /* parquet1.tga */,
-				C7806B071DDCB35C0019DE30 /* Robot.cpp */,
-				C7806B081DDCB35C0019DE30 /* Robot.h */,
-				C7806B091DDCB35C0019DE30 /* robot2.jpg */,
-				C7806B0A1DDCB35C0019DE30 /* TextureLoader.cpp */,
-				C7806B0B1DDCB35C0019DE30 /* TextureLoader.h */,
 				C7806B0C1DDCB35C0019DE30 /* Vector3.cpp */,
 				C7806B0D1DDCB35C0019DE30 /* Vector3.h */,
 				C7806AF91DDCB2DF0019DE30 /* main.cpp */,
@@ -137,6 +114,8 @@
 				C7B880801DF17C9E00EDC283 /* Track.hpp */,
 				C7B8807C1DF065A800EDC283 /* MyCamera.cpp */,
 				C7B8807D1DF065A800EDC283 /* MyCamera.hpp */,
+				C765847F1E0041FC00EEA9C0 /* Skybox.cpp */,
+				C76584801E0041FC00EEA9C0 /* Skybox.hpp */,
 			);
 			path = opengl_mycar;
 			sourceTree = "<group>";
@@ -216,15 +195,14 @@
 			files = (
 				C70A6FE71DE5763E0011282D /* Car.cpp in Sources */,
 				C7B880851DF2E66500EDC283 /* TextureLoad.cpp in Sources */,
-				C7806B101DDCB35C0019DE30 /* Robot.cpp in Sources */,
 				C796EBA61DE8015C00FAD14E /* list.cpp in Sources */,
 				C72F9EF81DEF20060030FECD /* main.cpp in Sources */,
-				C7806B0E1DDCB35C0019DE30 /* Camera.cpp in Sources */,
 				C796EBA91DE8017500FAD14E /* string_extra.cpp in Sources */,
 				C7B8807E1DF065A800EDC283 /* MyCamera.cpp in Sources */,
 				C7806B121DDCB35C0019DE30 /* Vector3.cpp in Sources */,
 				C796EBA01DE8006F00FAD14E /* objLoader.cpp in Sources */,
 				C7B880811DF17C9E00EDC283 /* Track.cpp in Sources */,
+				C76584811E0041FC00EEA9C0 /* Skybox.cpp in Sources */,
 				C796EBA31DE8013B00FAD14E /* obj_parser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
