@@ -14,7 +14,7 @@ GLuint tex[3];
 Car::Car() {
     currentPosition =  Vector3(0, 0, 0);
     directionalVector = Vector3(1, 0, 0);
-    speed = 3.0f;
+    speed = 4.5f;
     degree = 0.0f;
     pitch_degree =0.0f;
     totalDistance = 0.0f;
@@ -123,16 +123,6 @@ void Car::init_car() {
             int texIndex0 = (GLuint)objData->faceList[i]->material_index;
             
             glEnable(GL_TEXTURE_2D);
-//            if (texIndex0 == -1 || texIndex0 == 0) {
-//                glBindTexture( GL_TEXTURE_2D, 2);
-//            }
-//            else if (texIndex0 == 1){
-//                glBindTexture( GL_TEXTURE_2D,  0);
-//            }
-//            else if(texIndex0 == 2) {
-//                glBindTexture( GL_TEXTURE_2D, 3);
-//            }
-            //glBindTexture( GL_TEXTURE_2D, 0);
 
             if (texIndex0 == -1) {
                 glBindTexture( GL_TEXTURE_2D, 0);
@@ -259,8 +249,7 @@ void Car::draw_car() {
     
     glPushMatrix();
     glShadeModel(GL_SMOOTH);
-    
-    //glColor3f(0.2,0.4,0.1);
+
     glTranslatef(currentPosition.v[0], currentPosition.v[1], currentPosition.v[2]);
     glRotatef(270, 0.0, 1.0 ,0.0);
     
@@ -270,7 +259,6 @@ void Car::draw_car() {
 
     glScalef(0.1, 0.1, 0.1);
     glCallList(car_opengl);
-    //myObject.draw();
     
     glPopMatrix();
 }
@@ -280,11 +268,8 @@ void Car::rotate() {
     
 }
 
-
-void Car::rotateMatUtil(Vector3 &retVec, float angle) {
-    
+void Car::rotateMatUtil(Vector3 &retVec, float angle) {    
     float radian = -angle*PI/180.0f ;
-    
     Vector3 vec = Vector3(1, 0, 0);
     float tempX = vec[0] * cosf(radian) + vec[2] * -sinf(radian);
     float tempZ = vec[0] * sinf(radian) + vec[2] * cosf(radian);

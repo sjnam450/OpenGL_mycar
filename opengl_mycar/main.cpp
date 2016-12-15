@@ -6,47 +6,18 @@
 //  Copyright © 2016 sjnam. All rights reserved.
 //
 
-//#include <GLKit/glex>
 #include <GLUT/glut.h>
 #include <iostream>
-//#include "objLoader.h"
 #include "Car.hpp"
 #include "MyCamera.hpp"
 #include "Track.hpp"
 #include "Skybox.hpp"
 #include "Tree.hpp"
-
 #include <vector>
 
 
 #define WINDOW_WIDTH    800
 #define WINDOW_HEIGHT   600
-
-#define WINDOW_X_OFFSET 100
-#define WINDOW_Y_OFFSET 100
-
-
-int floorListNum;
-
-
-
-typedef float Point3DF[3];
-typedef int Point3DI[3];
-
-float colors[9][3] = {{0, 0, 0},		//	White
-    {0, 0, 0 },		//	Black
-    {1, 0, 0 },		//	Red
-    {0, 1, 0 },		//	Green
-    {0, 0, 1 },		//	Blue
-    {0, 1, 1 },		//	Cyan
-    {1, 0, 1 },		//	Magenta
-    {1, 1, 0},
-    {1, 0.5, 0}
-};	//	Yellow
-
-
-//texture
-//glTexture m_FloorTexture;
 
 Car *car;
 MyCamera *myCamera;
@@ -54,8 +25,6 @@ Track *track;
 Skybox *skybox;
 //Tree *tree;
 std::vector<Tree> treeVector;
-
-
 
 bool buffer[256]; //keyboard
 
@@ -69,12 +38,8 @@ void init() {
     glClearColor(1.0, 1.0, 1.0, 0.0); //background
     glEnable ( GL_DEPTH_TEST );
     glClearDepth(1.0);
-    
-    //glEnable ( GL_CULL_FACE );
-    
-//    glEnable(GL_BLEND);
-//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
+//light enable
 //    glEnable( GL_LIGHTING ); //조명을 사용할 것이다.
 //    glEnable( GL_LIGHT0 ); //조명 중 0 번 조명을 사용할 것이다.
     
@@ -82,23 +47,14 @@ void init() {
     GLfloat DiffuseLightValue[] = { 0.7f, 0.7f, 0.7f, 1.0f };
     GLfloat SpecularLightValue[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat PositionLightValue[] = { 0.0f, 0.0f, 1.0f, 0.0f };
-    
-    
-    
-    
 //    glLightfv( GL_LIGHT0, GL_AMBIENT, AmbientLightValue ); //Ambient 조명의 성질을 설정한다.
 //    glLightfv( GL_LIGHT0, GL_DIFFUSE, DiffuseLightValue ); //Diffuse 조명의 성질을 설정한다.
 //    glLightfv( GL_LIGHT0, GL_SPECULAR, SpecularLightValue ); //Specular 조명의 성질을 설정한다.
 //    glLightfv( GL_LIGHT0, GL_POSITION, PositionLightValue ); //조명의 위치(광원)를 설정한다.
     
     glCullFace ( GL_BACK );
-    myCamera->mode = WORLD;
-    
-    
-    //glMatrixMode(GL_MODELVIEW);
-    
-    
-    //StructFloor();
+//    myCamera->mode = WORLD;
+    myCamera->mode = CAR;
 }
 
 
@@ -117,7 +73,6 @@ void SetMaterial(const GLfloat spec[],const GLfloat amb[],const GLfloat diff[], 
 // Sets timer for refresh the display
 void Timer_sj(int extra)
 {
-    //printf("refresh\n");
     glutPostRedisplay();
     glutTimerFunc(30,Timer_sj,0);
 }
@@ -168,16 +123,12 @@ void Reshape(GLint newWidth, GLint newHeight)
 void display() {
     //	1. clear buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    
-    //glMatrixMode(GL_PROJECTION);
+
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
-    draw_axis2 ( );
+//    draw_axis2 ( );
     glPopAttrib();
     glPopMatrix();
-    
-
     
     glLoadIdentity();
     KeyOperations();
@@ -209,19 +160,11 @@ void display() {
     glPopMatrix();
 
     //4.sky
-//    skybox->draw();
-
-    
-
-    
     glPushMatrix();
     skybox->draw();
     glPopMatrix();
-    //4. draw tree
     
-
-
-    //tree->draw(); //so slow uu
+    //4. draw tree
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
     for (int i=0; i<400; i++) {
@@ -229,6 +172,7 @@ void display() {
     }
     glPopAttrib();
     glPopMatrix();
+    
     
     //3. draw_car();
     glPushMatrix();
@@ -307,20 +251,12 @@ int main(int argc,  char ** argv) {
 
 #pragma mark --
 #pragma mark Todo
-    
-    //2. load texture
-//    GLuint tex;
-//    glGenTextures(1, &tex);
-//    glBindTexture(GL_TEXTURE_2D, tex);
-    
-    
     //glut init
     glutInit(&argc, argv);
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (WINDOW_WIDTH, WINDOW_HEIGHT);
     glutInitWindowPosition (100, 100);
     glutCreateWindow (argv[0]);
-    
     
     // 3. car object init
     car = new Car();
@@ -349,9 +285,6 @@ int main(int argc,  char ** argv) {
         tree->setPos(300 * 0.5*i, -80, +200);
         treeVector.push_back(*tree);
     }
-
-    
-    
     
     // 5. light system init
     init();

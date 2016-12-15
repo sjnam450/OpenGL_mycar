@@ -17,9 +17,7 @@ enum CAMERA_MODE {
         CAR = 1
 };
 
-
 class MyCamera {
-    
         
 public:
     MyCamera(void);
@@ -37,12 +35,9 @@ public:
     CAMERA_MODE mode;
     
     float zoom;
-    
     float camera_y;
     float camera_x;
     float camera_z;
-    
-    
     
     Vector3 currentPosition;
     Vector3 viewVector;

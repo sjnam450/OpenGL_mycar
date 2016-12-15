@@ -16,13 +16,10 @@
 
 class Track {
     
-    
 public:
     Track();
     ~Track(void);
     void draw_track(float R1,float R2);
-
-    
 };
 
 #endif /* Track_hpp */
