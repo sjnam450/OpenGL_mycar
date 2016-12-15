@@ -53,10 +53,19 @@ void MyCamera::set( Vector3 position, Vector3 view)
 
 void MyCamera::setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec, float degree) {
     float radian = -degree*PI/180.0f ;
-    gluLookAt (carPosition.v[0]-cos(radian)*60, 35, carPosition.v[2]-sinf(radian)*60,
-               carPosition.v[0] ,  0, carPosition.v[2],
+    printf("current degree :  %f\n", degree);
+    gluLookAt (carPosition.v[0]-cos(radian)*60, 70, carPosition.v[2]-sinf(radian)*60,
+               carPosition.v[0] ,  30, carPosition.v[2],
                0.0f, 1.0f, 0.0f );
    
+    
+}
+
+void MyCamera::setFrontCar(Vector3 carPosition, Vector3 carDirectionalVec, float degree) {
+    float radian2 = -degree*PI/180.0f ;
+    gluLookAt (carPosition.v[0]+viewVector[0]*200, 45, carPosition.v[2]+viewVector[2]*200,
+               carPosition.v[0] +cos(radian2)*60,  40, carPosition.v[2]+sinf(radian2)*60,
+               0.0f, 1.0f, 0.0f );
     
 }
 

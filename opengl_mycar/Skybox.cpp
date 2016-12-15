@@ -55,7 +55,6 @@ Skybox::Skybox() {
         fclose(filePtr);
         
     }
-
     glGenTextures( 6, skytex); //Create a Texture via ID
     for (int i=0; i<skymapCount; i++) {
         glBindTexture( GL_TEXTURE_2D, skytex[i]);
@@ -63,24 +62,22 @@ Skybox::Skybox() {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
         glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, 512, 512, 0, GL_BGR, GL_UNSIGNED_BYTE, imgDatas[i]);
     }
-
-    
-
-    
 }
 
 void Skybox::draw() {
 
-    float mapSize = 2000.0f;
+    float mapSize = 2500.0f;
     float y_attrib = 200;
     
     float sb_vertices[8][3] = {
         {-mapSize, mapSize-y_attrib ,mapSize}, {-mapSize,mapSize-y_attrib ,-mapSize}, {-mapSize,-mapSize-y_attrib, mapSize},{-mapSize, -mapSize-y_attrib, -mapSize},{mapSize,mapSize-y_attrib, mapSize},
         {mapSize, mapSize-y_attrib, -mapSize},{mapSize,-mapSize-y_attrib, mapSize},{mapSize,-mapSize-y_attrib,-mapSize}};
     
-    int sb_texcoords[4][2] = {{0,1},{1,1},{1,0},{0,0}};
-    int sb_faces[6][4] = {{1,0,2,3},{3, 2, 6, 7}, {5, 4, 6, 7},
-        {4, 0, 2, 6},{1, 5, 7, 3}, {1, 0, 4, 5}};
+    
+    //back bottom front left right top
+    int sb_texcoords[4][2] = {{1,1},{0,1},{0,0},{1,0}};
+    int sb_faces[6][4] = {{1,0,2,3},{6, 7, 3, 2}, {4, 5, 7, 6},
+        {5, 1, 3, 7},{0, 4, 6, 2}, {0, 1, 5, 4}};
 
     
     glPushMatrix();

@@ -28,9 +28,10 @@ void Track::draw_track(float R1,float R2) {
 //    glMateriali(GL_FRONT, GL_SHININESS, 10);
     
     glColor3f(0.3,0.3,0.6);
-    
+
+    glPushMatrix();
     glTranslatef(-1200, 0, 0);
-    
+
     glBegin(GL_QUAD_STRIP);
     for (y=0; y<=2401; y++) {
         X = y;
@@ -44,9 +45,11 @@ void Track::draw_track(float R1,float R2) {
         
     }
     glEnd();
+    glPopMatrix();
     
     //glLoadIdentity();
-    glTranslatef(2400, 0, 50 + R2);
+    glPushMatrix();
+    glTranslatef(1200, 0, 50 + R2);
     //glTranslatef(10, 0, 10);
     glBegin(GL_QUAD_STRIP);
   
@@ -62,9 +65,11 @@ void Track::draw_track(float R1,float R2) {
         glNormal3f(0, 1, 0);
     }
     glEnd();
+    glPopMatrix();
 
     
-    glTranslatef(-2400, 0, 650);
+    glPushMatrix();
+    glTranslatef(-1200, 0, 1300);
     glBegin(GL_QUAD_STRIP);
     for (y=0; y<=2400; y++) {
         X = y;
@@ -77,8 +82,10 @@ void Track::draw_track(float R1,float R2) {
         
     }
     glEnd();
+    glPopMatrix();
 
-    glTranslatef(0, 0, -650);
+    glPushMatrix();
+    glTranslatef(-1200, 0, 650);
     glBegin(GL_QUAD_STRIP);
     
     

@@ -14,7 +14,8 @@
 
 enum CAMERA_MODE {
         WORLD = 0,
-        CAR = 1
+        CAR = 1,
+        FrontView =2
 };
 
 class MyCamera {
@@ -30,6 +31,7 @@ public:
              float upVectorX, float upVectorY, float upVectorZ);
     void set( Vector3 position, Vector3 view);
     void setBehindCar(Vector3 carPosition, Vector3 carDirectionalVec, float degree);
+    void setFrontCar(Vector3 carPosition, Vector3 carDirectionalVec, float degree);
     void viewDefault();
     
     CAMERA_MODE mode;

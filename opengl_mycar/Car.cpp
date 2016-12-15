@@ -100,10 +100,6 @@ void Car::init_car() {
     int count=0;
     //TGAFILE tgaFile1, tgaFile2, tgaFile3;
     //            objData->materialList[objData->faceList[i]->material_index]->texture_filename;
-    
-
-
-    
     car_opengl=glGenLists(1);
     glNewList(car_opengl, GL_COMPILE);
     {

@@ -15,6 +15,7 @@
 #include "Tree.hpp"
 #include <vector>
 
+#include "Ground.hpp"
 
 #define WINDOW_WIDTH    800
 #define WINDOW_HEIGHT   600
@@ -23,6 +24,7 @@ Car *car;
 MyCamera *myCamera;
 Track *track;
 Skybox *skybox;
+Ground *ground;
 //Tree *tree;
 std::vector<Tree> treeVector;
 
@@ -126,7 +128,7 @@ void display() {
 
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
-//    draw_axis2 ( );
+    draw_axis2 ( );
     glPopAttrib();
     glPopMatrix();
     
@@ -141,6 +143,10 @@ void display() {
         myCamera->viewDefault();
     }
     
+    else if(myCamera->mode==FrontView){
+        myCamera->setFrontCar(car->currentPosition, car->directionalVector, car->degree);
+        
+    }
     
 //    GLfloat specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
 //    
@@ -159,6 +165,12 @@ void display() {
     glPopAttrib();
     glPopMatrix();
 
+    // ground
+    glPushMatrix();
+    ground->draw();
+    glPopMatrix();
+
+    
     //4.sky
     glPushMatrix();
     skybox->draw();
@@ -167,7 +179,7 @@ void display() {
     //4. draw tree
     glPushMatrix();
     glPushAttrib(GL_CURRENT_BIT);
-    for (int i=0; i<400; i++) {
+    for (int i=0; i<36*2; i++) {
         treeVector[i].draw();
     }
     glPopAttrib();
@@ -198,6 +210,12 @@ void KeyOperations() {
     if (buffer['s']) {
         printf("s input\n");
         car->moveback();
+        
+    }
+    
+    if (buffer['v']) {
+        printf("v input\n");
+        myCamera->mode=FrontView;
         
     }
     if (buffer['p']) {
@@ -266,6 +284,7 @@ int main(int argc,  char ** argv) {
     
     // 4.1 track
     track = new Track();
+    ground = new Ground();
     
     // 4.2 skymap
     skybox = new Skybox();
@@ -274,17 +293,29 @@ int main(int argc,  char ** argv) {
     treeVector.reserve(400);
     
     //나무 위치 잡기
-    for (int i; i<200; i++) {
+    for (int i; i<18; i++) {
         Tree *tree = new Tree();
-        tree->setPos(300 * 0.5*i, -80, -200);
+        tree->setPos(-1300+300 * 0.5*i, -40, -100);
         treeVector.push_back(*tree);
     }
     
-    for (int i=0; i<200; i++) {
+    for (int i=0; i<18; i++) {
         Tree *tree = new Tree();
-        tree->setPos(300 * 0.5*i, -80, +200);
+        tree->setPos(-1300+300 * 0.5*i, -40, +100);
         treeVector.push_back(*tree);
     }
+    for (int i=0; i<18; i++) {
+        Tree *tree = new Tree();
+        tree->setPos(-1300+300 * 0.5*i, -40, +1250);
+        treeVector.push_back(*tree);
+    }
+    
+    for (int i=0; i<18; i++) {
+        Tree *tree = new Tree();
+        tree->setPos(-1300+300 * 0.5*i, -40, +1350);
+        treeVector.push_back(*tree);
+    }
+
     
     // 5. light system init
     init();
