@@ -73,41 +73,139 @@ void SetMaterial(const GLfloat spec[],const GLfloat amb[],const GLfloat diff[], 
 
 
 // Sets timer for refresh the display
-void Timer_sj(int extra)
+void timer(int extra)
 {
     glutPostRedisplay();
-    glutTimerFunc(30,Timer_sj,0);
+    glutTimerFunc(30,timer,0); //33프레임
 }
 
 void draw_axis2 ( )
 {
+    //    glPushMatrix();
+    //    glLineWidth ( 2.0f );
+    //    glColor3f(1,0,0); //red x
+    //    glBegin(GL_LINE_LOOP);
+    //    glVertex3f(-2000,0,0);
+    //    glVertex3f(2000,0,0);
+    //    glEnd();
+    //    glPopMatrix();
+    //
+    //    glPushMatrix();
+    //    glBegin(GL_LINE_LOOP);
+    //    glColor3f(0,1,0); //green y
+    //    glVertex3f(0,-2000,0);
+    //    glVertex3f(0,2000,0);
+    //    glEnd();
+    //    glPopMatrix();
+    //
+    //    glPushMatrix();
+    //    glBegin(GL_LINE_LOOP);
+    //    glColor3f(0,0,1); //blue z
+    //    glVertex3f(0,0,-2000);
+    //    glVertex3f(0,0,2000);
+    //    glEnd();
+    //    glPopMatrix();
+    //
+    
+    
+    //start line
     glPushMatrix();
-    glLineWidth ( 2.0f );
-    glColor3f(1,0,0); //red x
-    glBegin(GL_LINE_LOOP);
-    glVertex3f(-2000,0,0);
-    glVertex3f(2000,0,0);
+    
+    glBegin(GL_QUADS);
+    glColor3f(1, 1, 1);
+    glVertex3f(0, 0, -50);
+    glVertex3f(7, 0, -50);
+    glVertex3f(7, 0, 50);
+    glVertex3f(0, 0, 50);
     glEnd();
+    
+    
+    glLineWidth ( 10.0f );
+    glBegin(GL_LINES);
+    glColor3f(0,0,0);
+    glVertex3f(0,0,-50);
+    glVertex3f(0,0,50);
+    
+    glVertex3f(0, 0, -50);
+    glVertex3f(7, 0, 50);
+    
+    glVertex3f(7, 0, -50);
+    glVertex3f(0, 0, 50);
+    
+    glLineWidth(60.0f);
+    glVertex3f(3.5,0,-50);
+    glVertex3f(3.5,0,50);
+    
+    
+    glVertex3f(7,0,-50);
+    glVertex3f(7,0,50);
+    
+    
+    glVertex3f(0,0,-50);
+    glVertex3f(0,0,50);
+    
+    glVertex3f(0, 0, -50);
+    glVertex3f(7, 0, -50);
+    
+    glVertex3f(0, 0, 50);
+    glVertex3f(7, 0, 50);
+    
+    
+    glEnd();
+    
+    
+    //MIDDLE LINE
+    glPushAttrib(GL_ENABLE_BIT);
+    glLineWidth ( 5.0f );
+    
+    glLineStipple(1, 0x00FF);
+    glEnable(GL_LINE_STIPPLE);
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex3f(1200,0,0);
+    glVertex3f(-1200,0,0);
+    glEnd();
+    
+    glBegin(GL_LINES);
+    glColor3f(1, 1, 1);
+    glVertex3f(1200,0,1300);
+    glVertex3f(-1200,0,1300);
+    glEnd();
+    
+    
+    glPopAttrib();
+    
+    
+    
     glPopMatrix();
     
-    glPushMatrix();
-    glBegin(GL_LINE_LOOP);
-    glColor3f(0,1,0); //green y
-    glVertex3f(0,-2000,0);
-    glVertex3f(0,2000,0);
-    glEnd();
-    glPopMatrix();
     
     glPushMatrix();
-    glBegin(GL_LINE_LOOP);
-    glColor3f(0,0,1); //blue z
-    glVertex3f(0,0,-2000);
-    glVertex3f(0,0,2000);
+    glTranslatef(0, 0, -650);
+    
+    glBegin(GL_LINES);
+    glColor3f(1, 0.8, 0.2)  ;
+    int y,X,Y,Z;
+    for( y=90;y<=271;y+=1) {
+        X=650*cos(c*y)-1200;
+        Z=650*sin(c*y)+1300;
+        glVertex3f(X,0,Z);
+        
+        
+        
+        
+    }
+    for(y=90;y<=271;y+=1)
+    {
+        X=-1*650*cos(c*y)+1200;
+        Z=-1*650*sin(c*y)+1300;
+        glVertex3f(X,0,Z);
+        
+    }
     glEnd();
     glPopMatrix();
     
 }
-
 //Resize display
 void Reshape(GLint newWidth, GLint newHeight)
 {
@@ -332,7 +430,7 @@ int main(int argc,  char ** argv) {
     glutDisplayFunc(display);
     glutKeyboardFunc (keyboard);
     glutKeyboardUpFunc(keyboardUp);
-    glutTimerFunc(0,Timer_sj,0);
+    glutTimerFunc(0,timer,0);
     glutMainLoop();
 
 

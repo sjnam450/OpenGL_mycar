@@ -27,7 +27,7 @@ void Track::draw_track(float R1,float R2) {
 //    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
 //    glMateriali(GL_FRONT, GL_SHININESS, 10);
     
-    glColor3f(0.3,0.3,0.6);
+    glColor3f(0.3,0.3,0.3);
 
     glPushMatrix();
     glTranslatef(-1200, 0, 0);
